@@ -1,0 +1,108 @@
+import 'package:flimmix/view/pages/top_rate_movie/top_rate_list.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../core/widgets/shimmer.dart';
+import 'package:flimmix/controllers/top_rate_movie.dart';
+
+class TopRatedMovies extends StatelessWidget {
+  final TopRateMovieController controller = Get.find<TopRateMovieController>();
+  final VoidCallback? onSeeMore;
+
+  TopRatedMovies({super.key, this.onSeeMore});
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Top Rated',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Get.to(() => TopRatedListPage());
+                  },
+                  child: const Text('See More'),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 290,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: controller.itemCount,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              itemBuilder: (context, index) {
+                if (controller.isLoading.value) {
+                  return Container(
+                    width: 160,
+                    margin: const EdgeInsets.only(right: 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ShimmerLoadingBox(width: 160, height: 240),
+                        const SizedBox(height: 8),
+                        ShimmerLoadingBox(width: 120, height: 20),
+                        const SizedBox(height: 6),
+                        ShimmerLoadingBox(width: 60, height: 14),
+                      ],
+                    ),
+                  );
+                } else {
+                  final poster = controller.posterUrl(index);
+                  final title = controller.movieTitle(index);
+                  final rating = controller.movieRating(index);
+                  return Container(
+                    width: 160,
+                    margin: const EdgeInsets.only(right: 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AspectRatio(
+                          aspectRatio: 2 / 3,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: poster.isEmpty
+                                ? Container(color: Colors.grey)
+                                : Image.network(poster, fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) =>
+                                    Container(color: Colors.grey)),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Row(
+                          children: [
+                            const Icon(Icons.star,
+                                color: Colors.amber, size: 14),
+                            const SizedBox(width: 4),
+                            Text(rating,
+                                style: const TextStyle(fontSize: 12)),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
+        ],
+      );
+    });
+  }
+}
