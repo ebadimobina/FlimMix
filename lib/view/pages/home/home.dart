@@ -1,7 +1,7 @@
 import 'package:flimmix/view/pages/top_rate_movie/top_rate_movie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../top_rate_movie/top_rate_list.dart';
+import '../top_rate_movie/top_rate_list/top_rate_list.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

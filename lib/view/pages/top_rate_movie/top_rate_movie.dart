@@ -1,8 +1,9 @@
-import 'package:flimmix/view/pages/top_rate_movie/top_rate_list.dart';
+import 'package:flimmix/view/pages/top_rate_movie/top_rate_list/top_rate_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/widgets/shimmer.dart';
+import '../../../core/utils/shimmer.dart';
 import 'package:flimmix/controllers/top_rate_movie.dart';
+import '../movie_details/movie_details_page.dart';
 
 class TopRatedMovies extends StatelessWidget {
   final TopRateMovieController controller = Get.find<TopRateMovieController>();
@@ -61,40 +62,57 @@ class TopRatedMovies extends StatelessWidget {
                   final poster = controller.posterUrl(index);
                   final title = controller.movieTitle(index);
                   final rating = controller.movieRating(index);
-                  return Container(
-                    width: 160,
-                    margin: const EdgeInsets.only(right: 12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AspectRatio(
-                          aspectRatio: 2 / 3,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: poster.isEmpty
-                                ? Container(color: Colors.grey)
-                                : Image.network(poster, fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) =>
-                                    Container(color: Colors.grey)),
+                  controller.movieAt(index);
+                  return GestureDetector(
+                    onTap: () {
+                      final selectedMovie = controller.movieAt(index);
+                      if (selectedMovie != null) {
+                        Get.to(() => MovieDetailsPage(),
+                            arguments: selectedMovie);
+                      }
+                    },
+                    child: Container(
+                      width: 160,
+                      margin: const EdgeInsets.only(right: 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AspectRatio(
+                            aspectRatio: 2 / 3,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: poster.isEmpty
+                                  ? Container(
+                                      color: Colors.grey[300],
+                                      height: 290,
+                                      alignment: Alignment.center,
+                                      child: const Icon(Icons.broken_image,
+                                          size: 50, color: Colors.grey),
+                                    )
+                                  : Image.network(poster,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (_, __, ___) =>
+                                          Container(color: Colors.grey)),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Row(
-                          children: [
-                            const Icon(Icons.star,
-                                color: Colors.amber, size: 14),
-                            const SizedBox(width: 4),
-                            Text(rating,
-                                style: const TextStyle(fontSize: 12)),
-                          ],
-                        ),
-                      ],
+                          const SizedBox(height: 8),
+                          Text(
+                            title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Row(
+                            children: [
+                              const Icon(Icons.star,
+                                  color: Colors.amber, size: 14),
+                              const SizedBox(width: 4),
+                              Text(rating,
+                                  style: const TextStyle(fontSize: 12)),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 }

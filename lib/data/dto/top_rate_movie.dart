@@ -1,6 +1,6 @@
 class TopRateMovie {
   int page;
-  List<Result> results;
+  List<ResultTopRate> results;
   int totalPages;
   int totalResults;
 
@@ -15,14 +15,14 @@ class TopRateMovie {
     return TopRateMovie(
       page: json['page'],
       results:
-          List<Result>.from(json['results'].map((x) => Result.fromJson(x))),
+          List<ResultTopRate>.from(json['results'].map((x) => ResultTopRate.fromJson(x))),
       totalPages: json['total_pages'],
       totalResults: json['total_results'],
     );
   }
 }
 
-class Result {
+class ResultTopRate {
   bool adult;
   String backdropPath;
   List<int> genreIds;
@@ -32,13 +32,13 @@ class Result {
   String overview;
   double popularity;
   String posterPath;
-  String releaseDate;
+  DateTime? releaseDate;
   String title;
   bool video;
   double voteAverage;
   int voteCount;
 
-  Result({
+  ResultTopRate({
     required this.adult,
     required this.backdropPath,
     required this.genreIds,
@@ -55,8 +55,8 @@ class Result {
     required this.voteCount,
   });
 
-  factory Result.fromJson(Map<String, dynamic> json) {
-    return Result(
+  factory ResultTopRate.fromJson(Map<String, dynamic> json) {
+    return ResultTopRate(
       adult: json['adult'],
       backdropPath: json['backdrop_path'] ?? '',
       genreIds: List<int>.from(json['genre_ids']),
@@ -66,7 +66,9 @@ class Result {
       overview: json['overview'],
       popularity: (json['popularity'] as num).toDouble(),
       posterPath: json['poster_path'] ?? '',
-      releaseDate: json['release_date'],
+      releaseDate: json['release_date'] == null || json['release_date'] == ""
+          ? null
+          : DateTime.parse(json['release_date']),
       title: json['title'],
       video: json['video'],
       voteAverage: (json['vote_average'] as num).toDouble(),
