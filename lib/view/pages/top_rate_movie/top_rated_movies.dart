@@ -1,9 +1,9 @@
-import 'package:flimmix/view/pages/top_rate_movie/top_rate_list/top_rate_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/utils/shimmer.dart';
+import '../../../core/widgets/shimmer.dart';
 import 'package:flimmix/controllers/top_rate_movie.dart';
-import '../movie_details/movie_details_page.dart';
+
+import '../movie_details/movies_details_page.dart';
 
 class TopRatedMovies extends StatelessWidget {
   final TopRateMovieController controller = Get.find<TopRateMovieController>();
@@ -13,24 +13,45 @@ class TopRatedMovies extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
     return Obx(() {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Top Rated',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                Text(
+                  'Top Rate',
+                  style: textTheme.headlineSmall
+                      ?.copyWith(fontFamily: 'Mulish',
+                    fontWeight: FontWeight.w600,
+                      color: Color(0xFF110E47),
+                  ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Get.to(() => TopRatedListPage());
-                  },
-                  child: const Text('See More'),
+                GestureDetector(
+                  onTap: onSeeMore,
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: const Color(0xFFE5E4EA)),
+                      // border: 1px solid
+                      borderRadius:
+                          BorderRadius.circular(100), // border-radius: 100px
+                    ),
+                    child: const Text(
+                      'See more',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFFAAA9B1),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -67,7 +88,7 @@ class TopRatedMovies extends StatelessWidget {
                     onTap: () {
                       final selectedMovie = controller.movieAt(index);
                       if (selectedMovie != null) {
-                        Get.to(() => MovieDetailsPage(),
+                        Get.to(() => MoviesDetailsPage(),
                             arguments: selectedMovie);
                       }
                     },
@@ -80,7 +101,7 @@ class TopRatedMovies extends StatelessWidget {
                           AspectRatio(
                             aspectRatio: 2 / 3,
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(5),
                               child: poster.isEmpty
                                   ? Container(
                                       color: Colors.grey[300],
@@ -100,15 +121,27 @@ class TopRatedMovies extends StatelessWidget {
                             title,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Mulish',
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 0.02,
+                            ),
                           ),
+                          const SizedBox(height: 3),
                           Row(
                             children: [
                               const Icon(Icons.star,
                                   color: Colors.amber, size: 14),
                               const SizedBox(width: 4),
-                              Text(rating,
-                                  style: const TextStyle(fontSize: 12)),
+                              Text(
+                                rating,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  height: 1.25,
+                                  color: Color(0xFF9C9C9C),
+                                ),
+                              ),
                             ],
                           ),
                         ],

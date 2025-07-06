@@ -1,6 +1,7 @@
-import 'package:flimmix/controllers/home_controller.dart';
 import 'package:flimmix/controllers/top_rate_movie.dart';
 import 'package:get/get.dart';
+
+import '../../../controllers/home_controller.dart';
 
 class HomeBinding extends Bindings {
   @override

@@ -1,3 +1,5 @@
+import 'movie.dart';
+
 class TopRateMovie {
   int page;
   List<ResultTopRate> results;
@@ -22,19 +24,29 @@ class TopRateMovie {
   }
 }
 
-class ResultTopRate {
+class ResultTopRate extends MovieBase{
   bool adult;
+  @override
   String backdropPath;
+  @override
   List<int> genreIds;
+  @override
   int id;
   String originalLanguage;
+  @override
   String originalTitle;
+  @override
   String overview;
+  @override
   double popularity;
+  @override
   String posterPath;
+  @override
   DateTime? releaseDate;
+  @override
   String title;
   bool video;
+  @override
   double voteAverage;
   int voteCount;
 

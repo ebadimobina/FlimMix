@@ -1,19 +1,19 @@
+import 'package:flimmix/view/pages/movie_details/movies_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../core/utils/shimmer.dart';
-import '../../movie_details/movie_details_page.dart';
-import 'package:flimmix/controllers/top_rate_movie.dart';
+import '../../../../controllers/popular_movie.dart';
+import '../../../../core/widgets/shimmer.dart';
 
-class TopRatedListPage extends StatelessWidget {
-  final TopRateMovieController controller = Get.find<TopRateMovieController>();
+class PopularMoviesList extends StatelessWidget {
+  final PopularMovieController controller = Get.find<PopularMovieController>();
 
-  TopRatedListPage({super.key});
+  PopularMoviesList({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Top Rated Movies'),
+        title: const Text('Top Rated Movies' ,),
         centerTitle: true,
       ),
       body: Obx(() {
@@ -63,39 +63,39 @@ class TopRatedListPage extends StatelessWidget {
               final title = controller.movieTitle(index);
               final rating = controller.movieRating(index);
               return InkWell(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(6),
                 onTap: () {
                   final selectedMovie = controller.movieAt(index);
                   if (selectedMovie != null) {
-                    Get.to(() => MovieDetailsPage(), arguments: selectedMovie);
+                    Get.to(() => MoviesDetailsPage(), arguments: selectedMovie);
                   }
                 },
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(6),
                       child: poster.isEmpty
                           ? Container(
-                              color: Colors.grey[300],
-                              height: 290,
-                              alignment: Alignment.center,
-                              child: const Icon(Icons.broken_image,
-                                  size: 50, color: Colors.grey),
-                            )
+                        color: Colors.grey[300],
+                        height: 290,
+                        alignment: Alignment.center,
+                        child: const Icon(Icons.broken_image,
+                            size: 50, color: Colors.grey),
+                      )
                           : Image.network(
-                              poster,
-                              width: double.infinity,
-                              height: 290,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => Container(
-                                color: Colors.grey[300],
-                                height: 220,
-                                alignment: Alignment.center,
-                                child: const Icon(Icons.broken_image,
-                                    size: 50, color: Colors.grey),
-                              ),
-                            ),
+                        poster,
+                        width: double.infinity,
+                        height: 290,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => Container(
+                          color: Colors.grey[300],
+                          height: 220,
+                          alignment: Alignment.center,
+                          child: const Icon(Icons.broken_image,
+                              size: 50, color: Colors.grey),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(

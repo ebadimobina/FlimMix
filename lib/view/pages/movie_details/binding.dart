@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
-import '../../../controllers/movie_details_page.dart';
+import '../../../controllers/movie_details.dart';
+
 
 class MovieDetailsBinding implements Bindings{
   @override
