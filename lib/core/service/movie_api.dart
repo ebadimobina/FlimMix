@@ -1,8 +1,10 @@
-import 'package:flimmix/data/dto/top_rate_movie.dart';
-import 'package:flimmix/data/dto/cast_movie.dart';
-import 'package:flimmix/data/network/api_manager.dart';
-import 'package:flimmix/data/network/endpoints.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../../model/dto/cast_movie.dart';
+import '../../model/dto/popular_movie.dart';
+import '../../model/dto/top_rate_movie.dart';
+import '../../model/network/api_manager.dart';
+import '../../model/network/endpoints.dart';
 
 class MovieApi {
   //use central dio
@@ -25,11 +27,10 @@ class MovieApi {
   //fetch movie credits from TMDB
   Future<MovieCredits> fetchMovieCredits(int movieId) async {
     try {
-      final response = await _apiManager.dio.get(
-        'movie/$movieId/credits',
-        queryParameters: {'language': 'en-US'},
-      );
-
+      print('Fetching credits for movie ID: $movieId');
+      final response = await _apiManager.dio.get(Endpoints.movieCredits(movieId));
+      print('Status code: ${response.statusCode}');
+      print('Response: ${response.data}');
       if (response.statusCode == 200) {
         return MovieCredits.fromJson(response.data);
       } else {
@@ -41,4 +42,17 @@ class MovieApi {
     }
   }
 
+  //fetch popular movie from TMDB
+  Future<Popular> fetchPopularMovies() async {
+    try {
+      final response = await _apiManager.dio.get(Endpoints.popular);
+      if (response.statusCode == 200) {
+        return Popular.fromJson(response.data);
+      } else {
+        throw Exception('Failed to load popular movies with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to load popular movies: $e');
+    }
+  }
 }

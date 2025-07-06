@@ -1,12 +1,13 @@
-import 'package:flimmix/data/dto/top_rate_movie.dart';
-import 'package:flimmix/data/network/movie_api.dart';
+import 'package:flimmix/core/service/movie_api.dart';
 import 'package:get/get.dart';
+
+import '../model/dto/top_rate_movie.dart';
 
 class TopRateMovieController extends GetxController {
   final MovieApi _movieApi = MovieApi();
 
-  final RxList<ResultTopRate> topMovies = <ResultTopRate>[].obs;
-  final RxBool isLoading = false.obs;
+  final RxList<ResultTopRate> topMovies =RxList();
+  final RxBool isLoading = RxBool(false);
 
   int get itemCount => isLoading.value ? 8 : topMovies.length;
   bool get hasMovies => topMovies.isNotEmpty;

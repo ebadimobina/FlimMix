@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flimmix/controllers/movie_details_page.dart';
-import 'package:share_plus/share_plus.dart';
 
-class MovieDetailsPage extends StatelessWidget {
+import '../../../controllers/movie_details.dart';
+
+class MoviesDetailsPage extends StatelessWidget {
   final controller = Get.put(MovieDetailsController());
 
-  MovieDetailsPage({super.key});
+  MoviesDetailsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class MovieDetailsPage extends StatelessWidget {
               Stack(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(8),
                     child: Hero(
                       tag: controller.movie.id,
                       child: Image.network(
@@ -43,7 +43,7 @@ class MovieDetailsPage extends StatelessWidget {
                   Container(
                     height: 350,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(8),
                       gradient: LinearGradient(
                         begin: Alignment.bottomCenter,
                         end: Alignment.topCenter,
@@ -65,7 +65,7 @@ class MovieDetailsPage extends StatelessWidget {
                     top: 8,
                     child: IconButton(
                       icon: const Icon(Icons.share, color: Colors.white),
-                      onPressed: () => shareMovie(context),
+                      onPressed: () => controller.shareMovie(context),
                       tooltip: 'Share',
                     ),
                   ),
@@ -77,7 +77,7 @@ class MovieDetailsPage extends StatelessWidget {
                             controller.isFavorite.value
                                 ? Icons.favorite
                                 : Icons.favorite_border,
-                            color: Colors.white,
+                            color: Colors.red,
                           ),
                           onPressed: controller.toggleFavorite,
                           tooltip: 'Favorite',
@@ -109,7 +109,7 @@ class MovieDetailsPage extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
-                      color: colorScheme.primary,
+                      color: colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Row(
@@ -148,7 +148,7 @@ class MovieDetailsPage extends StatelessWidget {
                   const Icon(Icons.trending_up, color: Colors.green, size: 18),
                   const SizedBox(width: 6),
                   Text(
-                    'Popularity: ${controller.movie.popularity.toStringAsFixed(0)}',
+                    'Popularity: ${controller.movie.popularity?.toStringAsFixed(0)}',
                     style: textTheme.bodySmall,
                   ),
                 ],
@@ -156,8 +156,10 @@ class MovieDetailsPage extends StatelessWidget {
               const SizedBox(height: 24),
               Text(
                 'Overview',
-                style:
-                    textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                style: textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF110E47),
+                ),
               ),
               const SizedBox(height: 8),
               Text(
@@ -169,89 +171,91 @@ class MovieDetailsPage extends StatelessWidget {
               if (controller.genres.isNotEmpty) ...[
                 Text(
                   'Genres',
-                  style: textTheme.titleLarge
-                      ?.copyWith(fontWeight: FontWeight.bold),
+                  style: textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF110E47),
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Wrap(
                   spacing: 10,
                   runSpacing: 10,
                   children: controller.genres.map((name) {
-                    return Chip(
-                      label: Text(name),
-                      backgroundColor: Colors.blue.shade100,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFDBE3FF), // #DBE3FF
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: Text(
+                        name,
+                        style: textTheme.labelSmall?.copyWith(
+                          color: const Color(0xFF88A4E8),
+                          fontSize: 12,
+                        ),
                       ),
                     );
                   }).toList(),
                 ),
               ],
               const SizedBox(height: 32),
-              if (controller.castList.isNotEmpty) ...[
-                Text(
-                  'Cast',
-                  style: textTheme.titleLarge
-                      ?.copyWith(fontWeight: FontWeight.bold),
+              Text(
+                'Cast',
+                style: textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF110E47),
                 ),
-                const SizedBox(height: 12),
-                Obx(() => SizedBox(
-                      height: 180,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: controller.castList.length,
-                        itemBuilder: (context, index) {
-                          final actor = controller.castList[index];
-                          return SizedBox(
-                            width: 100,
-                            child: Column(
-                              children: [
-                                CircleAvatar(
-                                  radius: 40,
-                                  backgroundImage: actor.profilePath != null
-                                      ? NetworkImage(actor.profileImageUrl)
-                                      : null,
-                                  child: actor.profilePath == null
-                                      ? const Icon(Icons.person, size: 40)
-                                      : null,
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  actor.name,
-                                  style: textTheme.bodySmall,
-                                  maxLines: 2,
-                                  textAlign: TextAlign.center,
-                                ),
-                                if (actor.character != null)
-                                  Text(
-                                    actor.character!,
-                                    style: textTheme.labelSmall
-                                        ?.copyWith(color: Colors.grey),
-                                    maxLines: 2,
-                                    textAlign: TextAlign.center,
-                                  ),
-                              ],
+              ),
+              const SizedBox(height: 12),
+              Obx(() {
+                if (controller.castList.isEmpty) {
+                  return Text('No cast found');
+                }
+                return SizedBox(
+                  height: 180,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: controller.castList.length,
+                    itemBuilder: (context, index) {
+                      final cast = controller.castList[index];
+                      return Container(
+                        width: 80,
+                        margin: const EdgeInsets.only(right: 12),
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 50,
+                              backgroundImage: cast.profilePath != null
+                                  ? NetworkImage(
+                                      'https://image.tmdb.org/t/p/w200${cast.profilePath}')
+                                  : const AssetImage(
+                                          'assets/images/default_avatar.png')
+                                      as ImageProvider,
                             ),
-                          );
-                        },
-                      ),
-                    )),
-                const SizedBox(height: 24),
-              ]
+                            const SizedBox(height: 4),
+                            Text(
+                              cast.name,
+                              style: const TextStyle(fontSize: 12),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              cast.character ?? '',
+                              style: const TextStyle(
+                                  fontSize: 10, color: Colors.grey),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  void shareMovie(BuildContext context) {
-    final movieUrl = 'https://www.themoviedb.org/movie/${controller.movie.id}';
-    final message = 'Check out this movie: ${controller.title}\n\n$movieUrl';
-
-    Share.share(
-      message,
-      subject: controller.title,
     );
   }
 }
