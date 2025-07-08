@@ -3,4 +3,5 @@ class Endpoints {
   static const String topRated = '/movie/top_rated';
   static const String popular = '/movie/popular';
   static String movieCredits(int movieId) => '/movie/$movieId/credits';
+  static const String searchMovie = '/search/movie';
 }

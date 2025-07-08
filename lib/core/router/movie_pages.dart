@@ -1,4 +1,6 @@
 import 'package:flimmix/view/pages/movie_details/binding.dart';
+import 'package:flimmix/view/pages/search/binding.dart';
+import 'package:flimmix/view/pages/search/search_movies.dart';
 import 'package:get/get.dart';
 
 import '../../view/pages/home/binding.dart';
@@ -35,6 +37,12 @@ class MoviePages {
         page: () => PopularMovies(),
         binding: PopularMovieBinding(),
         transitionDuration: Duration.zero,
-        transition: Transition.noTransition)
+        transition: Transition.noTransition),
+    GetPage(
+        name: MovieRoutes.searchMovie,
+        page: () => SearchMoviesPage(),
+        binding: SearchMovieBinding(),
+        transitionDuration: Duration.zero,
+        transition: Transition.noTransition),
   ];
 }
