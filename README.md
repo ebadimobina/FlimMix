@@ -1,16 +1,40 @@
-# flimmix
+# 🎬 Flimmix - A Beautiful Flutter Movie App
 
-A new Flutter project.
+Flimmix is a modern and elegant movie app built with Flutter that helps you discover popular, top-rated, and upcoming movies — all in one place. Powered by The Movie Database (TMDb) API, it delivers a smooth and stunning user experience with clean architecture and GetX state management.
 
-## Getting Started
+## 🚀 Why Flimmix?
 
-This project is a starting point for a Flutter application.
+Tired of messy UIs and laggy apps when all you want is a simple way to browse good movies? Flimmix solves this by offering:
 
-A few resources to get you started if this is your first Flutter project:
+- 🎥 A fast and sleek interface
+- 🌍 Real-time movie data from TMDb API
+- 🔍 Debounced movie search with instant results
+- 💡 Clear separation of concerns (MVVM + GetX)
+- 💖 Built entirely with Flutter — open-source & cross-platform
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🔑 Features
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- ✅ Home screen with categorized movies (Popular, Top Rated, Upcoming)
+- ✅ Movie detail page with cast, overview, and related titles
+- ✅ Real-time search with debounce
+- ✅ Dark mode support
+- ✅ Smooth navigation with GetX
+- ✅ Clean and scalable architecture (GetX + Dio + Repository Pattern)
+
+## 📸 Screenshots
+
+
+## 🛠️ Tech Stack
+
+- Flutter + Dart 🐦
+- GetX for state management ⚙️
+- Dio for API requests 🌐
+- TMDb API for movie data 🎞️
+
+## 🧑‍💻 How to Run
+
+```bash
+git clone https://github.com/yourusername/flimmix.git
+cd flimmix
+flutter pub get
+flutter run
