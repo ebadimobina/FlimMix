@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/widgets/shimmer.dart';
@@ -26,10 +28,10 @@ class TopRatedMovies extends StatelessWidget {
               children: [
                 Text(
                   'Top Rate',
-                  style: textTheme.headlineSmall
-                      ?.copyWith(fontFamily: 'Mulish',
+                  style: textTheme.headlineSmall?.copyWith(
+                    fontFamily: 'Mulish',
                     fontWeight: FontWeight.w600,
-                      color: Color(0xFF110E47),
+                    color: Color(0xFF110E47),
                   ),
                 ),
                 GestureDetector(
@@ -44,7 +46,7 @@ class TopRatedMovies extends StatelessWidget {
                           BorderRadius.circular(100), // border-radius: 100px
                     ),
                     child: const Text(
-                      'See more',
+                      'See All',
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
@@ -61,7 +63,7 @@ class TopRatedMovies extends StatelessWidget {
             height: 290,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: controller.itemCount,
+              itemCount: min(6, controller.itemCount),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               itemBuilder: (context, index) {
                 if (controller.isLoading.value) {

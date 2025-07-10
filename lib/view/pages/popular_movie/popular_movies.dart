@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controllers/popular_movie.dart';
@@ -83,7 +85,7 @@ class PopularMovies extends StatelessWidget {
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: controller.itemCount,
+          itemCount: min(6, controller.itemCount),
           itemBuilder: (context, index) {
             final movie = controller.movieAt(index);
             final poster = controller.posterUrl(index);
