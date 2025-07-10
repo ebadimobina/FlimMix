@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
 
     final List<Widget> pages = [
       const HomeContent(),
-       SearchMoviesPage(),
+      SearchMoviesPage(),
     ];
 
     return Obx(() => Scaffold(
@@ -40,8 +40,7 @@ class HomePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 elevation: 3,
-                onSelected: (value) {
-                },
+                onSelected: (value) {},
                 itemBuilder: (context) => [
                   PopupMenuItem(
                     value: 'settings',
@@ -70,11 +69,11 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   PopupMenuItem(
-                    value: 'logout',
+                    value: 'Exit',
                     child: Row(
                       children: const [
                         SizedBox(width: 10),
-                        Text('Logout',
+                        Text('Exit',
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,

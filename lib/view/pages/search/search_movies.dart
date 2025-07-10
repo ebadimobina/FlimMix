@@ -23,6 +23,11 @@ class SearchMoviesPage extends StatelessWidget {
               filled: true,
               fillColor: Colors.grey.shade200,
               prefixIcon: const Icon(Icons.search, color: Colors.grey),
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.filter_list_alt, color: Colors.grey),
+                onPressed: () => showFilterDialog(context),
+                tooltip: 'Filter by rating',
+              ),
               hintText: 'Search movie...',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -32,21 +37,66 @@ class SearchMoviesPage extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(
-          child: Obx(() {
-            if (controller.isLoading.value) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (controller.searchResults.isEmpty) {
-              return const Center(child: Text('No Movie Founded'));
-            }
-            return buildMoviesGrid(
-              title: 'Searching Result',
-              movies: controller.searchResults,
-            );
-          }),
-        ),
+        Obx(() => Expanded(
+              child: buildMoviesGrid(
+                title: '',
+                movies: controller.searchResults,
+              ),
+            )),
       ],
+    );
+  }
+
+  void showFilterDialog(BuildContext context) {
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+          boxShadow: [
+            BoxShadow(color: Colors.black12, blurRadius: 8, spreadRadius: 2),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Sort by Rating',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            ListTile(
+              title: const Text('High to Low'),
+              leading: Obx(() => Radio<String>(
+                    value: 'high',
+                    groupValue: controller.sortByRating.value,
+                    onChanged: (value) {
+                      controller.sortByRating.value = value!;
+                      controller.sortResults();
+                      Get.back();
+                    },
+                  )),
+            ),
+            ListTile(
+              title: const Text('Low to High'),
+              leading: Obx(() => Radio<String>(
+                    value: 'low',
+                    groupValue: controller.sortByRating.value,
+                    onChanged: (value) {
+                      controller.sortByRating.value = value!;
+                      controller.sortResults();
+                      Get.back();
+                    },
+                  )),
+            ),
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text('Close'),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

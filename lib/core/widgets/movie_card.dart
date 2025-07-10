@@ -94,26 +94,39 @@ Widget buildMoviesGrid({required String title, required List<dynamic> movies}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-        child: Text(
-          title,
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      if (title.isNotEmpty)
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+          child: Text(
+            title,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
         ),
-      ),
       Expanded(
         child: GridView.builder(
           padding: const EdgeInsets.all(12),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 0.65,
+            childAspectRatio: 0.88,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
           ),
           itemCount: movies.length,
           itemBuilder: (context, index) {
             final movie = movies[index];
-            return MovieCard(movie: movie);
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                final screenHeight = MediaQuery.of(context).size.height;
+                final cardHeight = (screenHeight - kToolbarHeight - 100) / 4;
+                final cardWidth = constraints.maxWidth;
+                final aspectRatio = cardWidth / cardHeight;
+
+                return AspectRatio(
+                  aspectRatio: aspectRatio,
+                  child: MovieCard(movie: movie),
+                );
+              },
+            );
           },
         ),
       ),
