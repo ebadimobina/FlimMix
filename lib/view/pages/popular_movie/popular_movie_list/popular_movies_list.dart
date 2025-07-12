@@ -13,7 +13,9 @@ class PopularMoviesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Top Rated Movies' ,),
+        title: const Text(
+          'Top Rated Movies',
+        ),
         centerTitle: true,
       ),
       body: Obx(() {
@@ -77,25 +79,25 @@ class PopularMoviesList extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6),
                       child: poster.isEmpty
                           ? Container(
-                        color: Colors.grey[300],
-                        height: 290,
-                        alignment: Alignment.center,
-                        child: const Icon(Icons.broken_image,
-                            size: 50, color: Colors.grey),
-                      )
+                              color: Colors.grey[300],
+                              height: 290,
+                              alignment: Alignment.center,
+                              child: const Icon(Icons.broken_image,
+                                  size: 50, color: Colors.grey),
+                            )
                           : Image.network(
-                        poster,
-                        width: double.infinity,
-                        height: 290,
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => Container(
-                          color: Colors.grey[300],
-                          height: 220,
-                          alignment: Alignment.center,
-                          child: const Icon(Icons.broken_image,
-                              size: 50, color: Colors.grey),
-                        ),
-                      ),
+                              poster,
+                              width: double.infinity,
+                              height: 290,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => Container(
+                                color: Colors.grey[300],
+                                height: 220,
+                                alignment: Alignment.center,
+                                child: const Icon(Icons.broken_image,
+                                    size: 50, color: Colors.grey),
+                              ),
+                            ),
                     ),
                     const SizedBox(height: 4),
                     Text(

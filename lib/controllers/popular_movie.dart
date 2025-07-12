@@ -10,11 +10,23 @@ class PopularMovieController extends GetxController {
   late final ResultPopular movie;
 
   final MovieApi _movieApi = MovieApi();
+  final expandedGenreIndexes = <int>{}.obs;
+
+  void toggleGenres(int index) {
+    if (expandedGenreIndexes.contains(index)) {
+      expandedGenreIndexes.remove(index);
+    } else {
+      expandedGenreIndexes.add(index);
+    }
+  }
 
   @override
   void onInit() {
-    super.onInit();
     fetchPopularMovies();
+    super.onInit();
+  }
+  String shortOverview(String overview) {
+    return overview.length > 100 ? '${overview.substring(0, 100)}...' : overview;
   }
 
   Future<void> fetchPopularMovies() async {
@@ -33,13 +45,16 @@ class PopularMovieController extends GetxController {
   }
 
   int get itemCount => isLoading.value ? 8 : popularMovie.length;
+
   bool get hasMovies => popularMovie.isNotEmpty;
+
   bool get isLoadingNow => isLoading.value;
 
   List<String> genresAt(int index) {
     final movie = movieAt(index);
     return movie != null ? getGenreNames(movie.genreIds) : [];
   }
+
   ResultPopular? movieAt(int index) {
     if (isLoading.value) return null;
     if (index < 0 || index >= popularMovie.length) return null;

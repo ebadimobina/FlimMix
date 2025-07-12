@@ -22,18 +22,17 @@ class MovieDetailsController extends GetxController {
 
   String get title => movie.title;
 
-  String get vote =>
-      movie.voteAverage != null ? '${movie.voteAverage!.toStringAsFixed(1)}/10' : 'N/A';
+  String get vote => movie.voteAverage != null
+      ? '${movie.voteAverage!.toStringAsFixed(1)}/10'
+      : 'N/A';
 
-  String get releaseDate =>
-      movie.releaseDate != null
-          ? DateFormat('MMMM d, y').format(movie.releaseDate!)
-          : 'Release date unknown';
+  String get releaseDate => movie.releaseDate != null
+      ? DateFormat('MMMM d, y').format(movie.releaseDate!)
+      : 'Release date unknown';
 
   String get overview => movie.overview ?? 'No description.';
 
-  String get year =>
-      movie.releaseDate?.year.toString() ?? '----';
+  String get year => movie.releaseDate?.year.toString() ?? '----';
 
   List<String> get genres => getGenreNames(movie.genreIds);
 
@@ -49,9 +48,8 @@ class MovieDetailsController extends GetxController {
     }
 
     loadFavoriteStatus();
-    loadCredits(movie.id); // ✅ این خط رو درست کردیم
+    loadCredits(movie.id);
   }
-
 
   void loadFavoriteStatus() {
     final favorites = storage.read<List<dynamic>>(favoritesKey) ?? [];
@@ -78,7 +76,7 @@ class MovieDetailsController extends GetxController {
     isFavorite.toggle();
   }
 
-  void shareMovie( context) {
+  void shareMovie(context) {
     final movieUrl = 'https://www.themoviedb.org/movie/${movie.id}';
     final message = 'Check out this movie: $title\n\n$movieUrl';
 
@@ -95,4 +93,5 @@ class MovieDetailsController extends GetxController {
     } catch (e) {
       Get.snackbar('Error', 'Failed to load cast list');
     }
-  }}
+  }
+}

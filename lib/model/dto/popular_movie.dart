@@ -13,15 +13,17 @@ class Popular {
   final int? totalPages;
   final int? totalResults;
 
-  factory Popular.fromJson(Map<String, dynamic> json){
+  factory Popular.fromJson(Map<String, dynamic> json) {
     return Popular(
       page: json["page"],
-      results: json["results"] == null ? [] : List<ResultPopular>.from(json["results"]!.map((x) => ResultPopular.fromJson(x))),
+      results: json["results"] == null
+          ? []
+          : List<ResultPopular>.from(
+              json["results"]!.map((x) => ResultPopular.fromJson(x))),
       totalPages: json["total_pages"],
       totalResults: json["total_results"],
     );
   }
-
 }
 
 class ResultPopular extends MovieBase {
@@ -57,11 +59,13 @@ class ResultPopular extends MovieBase {
   final double? voteAverage;
   final int? voteCount;
 
-  factory ResultPopular.fromJson(Map<String, dynamic> json){
+  factory ResultPopular.fromJson(Map<String, dynamic> json) {
     return ResultPopular(
       adult: json["adult"],
       backdropPath: json["backdrop_path"],
-      genreIds: json["genre_ids"] == null ? [] : List<int>.from(json["genre_ids"]!.map((x) => x)),
+      genreIds: json["genre_ids"] == null
+          ? []
+          : List<int>.from(json["genre_ids"]!.map((x) => x)),
       id: json["id"],
       originalLanguage: json["original_language"],
       originalTitle: json["original_title"],
@@ -75,5 +79,4 @@ class ResultPopular extends MovieBase {
       voteCount: json["vote_count"],
     );
   }
-
 }

@@ -227,11 +227,11 @@ class MoviesDetailsPage extends StatelessWidget {
                             CircleAvatar(
                               radius: 50,
                               backgroundImage: cast.profilePath != null
-                                  ? NetworkImage(
-                                      'https://image.tmdb.org/t/p/w200${cast.profilePath}')
-                                  : const AssetImage(
-                                          'assets/images/default_avatar.png')
-                                      as ImageProvider,
+                                  ? NetworkImage('https://image.tmdb.org/t/p/w200${cast.profilePath}')
+                                  : null,
+                              child: cast.profilePath == null
+                                  ? const Icon(Icons.person, size: 40)
+                                  : null,
                             ),
                             const SizedBox(height: 4),
                             Text(

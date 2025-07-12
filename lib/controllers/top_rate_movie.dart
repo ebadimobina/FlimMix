@@ -42,7 +42,6 @@ class TopRateMovieController extends GetxController {
       topMovies.assignAll(response.results);
     } catch (e) {
       Get.snackbar('Error', 'Failed to fetch movies');
-      print('Error details: $e');
     } finally {
       isLoading.value = false;
     }
