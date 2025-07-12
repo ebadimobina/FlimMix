@@ -28,7 +28,7 @@ class SearchMoviesPage extends StatelessWidget {
                 onPressed: () => showFilterDialog(context),
                 tooltip: 'Filter by rating',
               ),
-              hintText: 'Search movie...',
+              hintText: 'Search Movie',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
@@ -41,6 +41,7 @@ class SearchMoviesPage extends StatelessWidget {
               child: buildMoviesGrid(
                 title: '',
                 movies: controller.searchResults,
+                isLoading: controller.isLoading.value,
               ),
             )),
       ],

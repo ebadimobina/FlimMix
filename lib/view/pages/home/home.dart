@@ -23,10 +23,7 @@ class HomePage extends StatelessWidget {
 
     return Obx(() => Scaffold(
           appBar: AppBar(
-            title: Text(
-              homeController.currentIndex.value == 0
-                  ? 'FilmMix'
-                  : 'Search Movies',
+            title: Text( 'FilmMix',
               style: const TextStyle(
                 color: Color(0xFF110E47),
               ),
