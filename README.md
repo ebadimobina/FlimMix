@@ -21,9 +21,6 @@ Tired of messy UIs and laggy apps when all you want is a simple way to browse go
 - ✅ Smooth navigation with GetX
 - ✅ Clean and scalable architecture (GetX + Dio + Repository Pattern)
 
-## 📸 Screenshots
-
-
 ## 🛠️ Tech Stack
 
 - Flutter + Dart 🐦
