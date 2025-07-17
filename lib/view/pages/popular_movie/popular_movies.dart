@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controllers/popular_movie.dart';
@@ -12,7 +11,6 @@ class PopularMovies extends StatelessWidget {
 
   PopularMovies({super.key, this.onSeeMore});
 
-  @override
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

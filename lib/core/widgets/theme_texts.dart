@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../fonts.dart';
 import 'theme_colors.dart';
 
 //sample
