@@ -5,8 +5,5 @@ class HomeController extends GetxController {
 
   void changePage(int index) {
     currentIndex.value = index;
-    if (index == 1) {
-      Get.toNamed('/search');
-    }
   }
 }

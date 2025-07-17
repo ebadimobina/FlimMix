@@ -1,3 +1,4 @@
+import 'package:flimmix/view/pages/bookmark_movies/bookmark_movies.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controllers/home_controller.dart';
@@ -13,17 +14,19 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomeController homeController = Get.put(HomeController());
+    final controller = Get.put(HomeController());
     Get.put(PopularMovieController());
 
     final List<Widget> pages = [
       const HomeContent(),
       SearchMoviesPage(),
+      BookMarkMoviesPage(),
     ];
 
     return Obx(() => Scaffold(
           appBar: AppBar(
-            title: Text( 'FilmMix',
+            title: Text(
+              'FilmMix',
               style: const TextStyle(
                 color: Color(0xFF110E47),
               ),
@@ -83,22 +86,38 @@ class HomePage extends StatelessWidget {
             ],
           ),
           body: IndexedStack(
-            index: homeController.currentIndex.value,
+            index: controller.currentIndex.value,
             children: pages,
           ),
           bottomNavigationBar: BottomNavigationBar(
-            currentIndex: homeController.currentIndex.value,
+            currentIndex: controller.currentIndex.value,
             selectedItemColor: const Color(0xFF110E47),
             onTap: (index) {
-              homeController.changePage(index);
+              controller.changePage(index);
             },
-            items: const [
+            items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+                icon: Icon(
+                  controller.currentIndex.value == 0
+                      ? Icons.home
+                      : Icons.home_outlined,
+                ),
                 label: '',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.search),
+                icon: Icon(
+                  controller.currentIndex.value == 1
+                      ? Icons.search
+                      : Icons.search_outlined,
+                ),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  controller.currentIndex.value == 2
+                      ? Icons.bookmark
+                      : Icons.bookmark_border,
+                ),
                 label: '',
               ),
             ],

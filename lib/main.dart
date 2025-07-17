@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: MovieRoutes.home,
       getPages: MoviePages.pages,
+
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../controllers/movie_details.dart';
 
 class MoviesDetailsPage extends StatelessWidget {
@@ -72,16 +71,19 @@ class MoviesDetailsPage extends StatelessWidget {
                   Positioned(
                     right: 8,
                     top: 8,
-                    child: Obx(() => IconButton(
-                          icon: Icon(
-                            controller.isFavorite.value
+                    child: Obx(
+                      () => IconButton(
+                        icon: Icon(
+                            controller.isFav.value == true
                                 ? Icons.favorite
                                 : Icons.favorite_border,
-                            color: Colors.red,
-                          ),
-                          onPressed: controller.toggleFavorite,
-                          tooltip: 'Favorite',
-                        )),
+                            color: controller.isFav.value == true
+                                ? Colors.red
+                                : Colors.white),
+                        onPressed: controller.toggleFavorite,
+                        tooltip: 'Favorite',
+                      ),
+                    ),
                   ),
                   Positioned(
                     bottom: 16,
@@ -227,7 +229,8 @@ class MoviesDetailsPage extends StatelessWidget {
                             CircleAvatar(
                               radius: 50,
                               backgroundImage: cast.profilePath != null
-                                  ? NetworkImage('https://image.tmdb.org/t/p/w200${cast.profilePath}')
+                                  ? NetworkImage(
+                                      'https://image.tmdb.org/t/p/w200${cast.profilePath}')
                                   : null,
                               child: cast.profilePath == null
                                   ? const Icon(Icons.person, size: 40)

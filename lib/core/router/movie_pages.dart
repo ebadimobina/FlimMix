@@ -3,6 +3,8 @@ import 'package:flimmix/view/pages/search/binding.dart';
 import 'package:flimmix/view/pages/search/search_movies.dart';
 import 'package:get/get.dart';
 
+import '../../view/pages/bookmark_movies/binding.dart';
+import '../../view/pages/bookmark_movies/bookmark_movies.dart';
 import '../../view/pages/home/binding.dart';
 import '../../view/pages/home/home.dart';
 import '../../view/pages/movie_details/movies_details_page.dart';
@@ -42,6 +44,12 @@ class MoviePages {
         name: MovieRoutes.searchMovie,
         page: () => SearchMoviesPage(),
         binding: SearchMovieBinding(),
+        transitionDuration: Duration.zero,
+        transition: Transition.noTransition),
+    GetPage(
+        name: MovieRoutes.bookmarkMovie,
+        page: () => BookMarkMoviesPage(),
+        binding: BookMarkBinding(),
         transitionDuration: Duration.zero,
         transition: Transition.noTransition),
   ];

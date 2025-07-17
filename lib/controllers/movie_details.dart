@@ -10,6 +10,8 @@ import '../model/dto/movie.dart';
 class MovieDetailsController extends GetxController {
   late MovieBase movie;
   RxBool isFavorite = RxBool(false);
+  RxBool get isFav => isFavorite;
+
   RxList<CastMember> castList = RxList();
   final storage = GetStorage();
   final favoritesKey = 'favorite_movies';
@@ -38,7 +40,6 @@ class MovieDetailsController extends GetxController {
 
   @override
   void onInit() {
-    super.onInit();
     final args = Get.arguments;
     if (args is MovieBase) {
       movie = args;
@@ -49,6 +50,7 @@ class MovieDetailsController extends GetxController {
 
     loadFavoriteStatus();
     loadCredits(movie.id);
+    super.onInit();
   }
 
   void loadFavoriteStatus() {
@@ -65,10 +67,13 @@ class MovieDetailsController extends GetxController {
         'id': movie.id,
         'title': movie.title,
         'posterPath': movie.posterPath,
+        'backdropPath': movie.backdropPath,
         'voteAverage': movie.voteAverage,
         'releaseDate': movie.releaseDate?.toIso8601String(),
         'overview': movie.overview,
         'genreIds': movie.genreIds,
+        'popularity': movie.popularity,
+        'originalTitle': movie.originalTitle,
       });
     }
 
