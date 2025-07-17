@@ -17,7 +17,6 @@ Tired of messy UIs and laggy apps when all you want is a simple way to browse go
 - ✅ Home screen with categorized movies (Popular, Top Rated, Upcoming)
 - ✅ Movie detail page with cast, overview, and related titles
 - ✅ Real-time search with debounce
-- ✅ Dark mode support
 - ✅ Smooth navigation with GetX
 - ✅ Clean and scalable architecture (GetX + Dio + Repository Pattern)
 
