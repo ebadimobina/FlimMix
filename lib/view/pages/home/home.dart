@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flimmix/view/pages/bookmark_movies/bookmark_movies.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controllers/home_controller.dart';
 import '../../../controllers/popular_movie.dart';
+import '../about/about.dart';
 import '../popular_movie/popular_movie_list/popular_movies_list.dart';
 import '../popular_movie/popular_movies.dart';
 import '../search/search_movies.dart';
@@ -40,7 +43,31 @@ class HomePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 elevation: 3,
-                onSelected: (value) {},
+                onSelected: (value) {
+                  if (value == 'about') {
+                    Get.to(() => const AboutMePage());
+                  } else if (value == 'Exit') {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Exit App'),
+                        content: const Text('Are you sure you want to exit?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              exit(0);
+                            },
+                            child: const Text('Exit'),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else if (value == 'settings') {}
+                },
                 itemBuilder: (context) => [
                   PopupMenuItem(
                     value: 'settings',

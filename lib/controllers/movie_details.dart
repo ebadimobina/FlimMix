@@ -6,6 +6,7 @@ import '../core/service/movie_api.dart';
 import '../model/dto/cast_movie.dart';
 import '../model/dto/genre_movie.dart';
 import '../model/dto/movie.dart';
+import 'bookmark_movie.dart';
 
 class MovieDetailsController extends GetxController {
   late MovieBase movie;
@@ -60,6 +61,7 @@ class MovieDetailsController extends GetxController {
 
   void toggleFavorite() {
     final favorites = storage.read<List<dynamic>>(favoritesKey) ?? [];
+
     if (isFavorite.value) {
       favorites.removeWhere((item) => item['id'] == movie.id);
     } else {
@@ -79,7 +81,11 @@ class MovieDetailsController extends GetxController {
 
     storage.write(favoritesKey, favorites);
     isFavorite.toggle();
+
+    final bookMarkController = Get.find<BookMarkMoviesController>();
+    bookMarkController.refreshFavorites();
   }
+
 
   void shareMovie(context) {
     final movieUrl = 'https://www.themoviedb.org/movie/${movie.id}';
