@@ -1,10 +1,8 @@
-import 'dart:io';
-
 import 'package:flimmix/view/pages/bookmark_movies/bookmark_movies.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../controllers/home_controller.dart';
-import '../../../controllers/popular_movie.dart';
 import '../about/about.dart';
 import '../popular_movie/popular_movie_list/popular_movies_list.dart';
 import '../popular_movie/popular_movies.dart';
@@ -18,7 +16,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(HomeController());
-    Get.put(PopularMovieController());
 
     final List<Widget> pages = [
       const HomeContent(),
@@ -59,29 +56,16 @@ class HomePage extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: () {
-                              exit(0);
+                              SystemNavigator.pop();
                             },
                             child: const Text('Exit'),
                           ),
                         ],
                       ),
                     );
-                  } else if (value == 'settings') {}
+                  }
                 },
                 itemBuilder: (context) => [
-                  PopupMenuItem(
-                    value: 'settings',
-                    child: Row(
-                      children: const [
-                        SizedBox(width: 10),
-                        Text('Settings',
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black45)),
-                      ],
-                    ),
-                  ),
                   PopupMenuItem(
                     value: 'about',
                     child: Row(
