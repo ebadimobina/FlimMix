@@ -18,7 +18,7 @@ Tired of messy UIs and laggy apps when all you want is a simple way to browse go
 - ✅ Movie detail page with cast, overview, and related titles
 - ✅ Real-time search with debounce
 - ✅ Smooth navigation with GetX
-- ✅ Clean and scalable architecture (GetX + Dio + Repository Pattern)
+- ✅ Clean and scalable architecture (GetX + Dio + Singleton Pattern)
 
 ## 🛠️ Tech Stack
 
