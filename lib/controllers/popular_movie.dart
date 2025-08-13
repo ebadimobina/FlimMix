@@ -8,7 +8,6 @@ class PopularMovieController extends GetxController {
   final RxBool isLoading = RxBool(false);
   final RxList<ResultPopular> popularMovie = RxList();
   late final ResultPopular movie;
-
   final MovieApi _movieApi = MovieApi();
   final expandedGenreIndexes = <int>{}.obs;
 
@@ -20,13 +19,10 @@ class PopularMovieController extends GetxController {
     }
   }
 
-  @override
-  void onInit() {
-    fetchPopularMovies();
-    super.onInit();
-  }
   String shortOverview(String overview) {
-    return overview.length > 100 ? '${overview.substring(0, 100)}...' : overview;
+    return overview.length > 100
+        ? '${overview.substring(0, 100)}...'
+        : overview;
   }
 
   Future<void> fetchPopularMovies() async {
@@ -73,5 +69,11 @@ class PopularMovieController extends GetxController {
   String movieRating(int index) {
     final movie = movieAt(index);
     return movie != null ? '${movie.voteAverage?.toStringAsFixed(1)}/10' : '';
+  }
+
+  @override
+  void onInit() {
+    fetchPopularMovies();
+    super.onInit();
   }
 }

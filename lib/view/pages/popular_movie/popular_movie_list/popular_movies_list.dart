@@ -6,7 +6,6 @@ import '../../../../core/widgets/shimmer.dart';
 
 class PopularMoviesList extends StatelessWidget {
   final PopularMovieController controller = Get.find<PopularMovieController>();
-
   PopularMoviesList({super.key});
 
   @override

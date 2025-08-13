@@ -10,7 +10,6 @@ import '../movie_details/movies_details_page.dart';
 class TopRatedMovies extends StatelessWidget {
   final TopRateMovieController controller = Get.find<TopRateMovieController>();
   final VoidCallback? onSeeMore;
-
   TopRatedMovies({super.key, this.onSeeMore});
 
   @override
@@ -41,7 +40,6 @@ class TopRatedMovies extends StatelessWidget {
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       border: Border.all(color: const Color(0xFFE5E4EA)),
-                      // border: 1px solid
                       borderRadius:
                           BorderRadius.circular(100), // border-radius: 100px
                     ),
@@ -63,7 +61,7 @@ class TopRatedMovies extends StatelessWidget {
             height: 290,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: min(6, controller.itemCount),
+              itemCount: min(12, controller.itemCount),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               itemBuilder: (context, index) {
                 if (controller.isLoading.value) {

@@ -7,7 +7,6 @@ class SearchMovieController extends GetxController {
   final searchResults = <dynamic>[].obs;
   final isLoading = false.obs;
   var sortByRating = 'none'.obs;
-
   final movieApi = MovieApi();
   Timer? _debounce;
 

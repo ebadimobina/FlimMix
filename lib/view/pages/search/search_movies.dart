@@ -4,10 +4,9 @@ import '../../../controllers/search_movie_controller.dart';
 import '../../../core/widgets/movie_card.dart';
 
 class SearchMoviesPage extends StatelessWidget {
-  SearchMoviesPage({super.key});
-
   final controller = Get.put(SearchMovieController());
   final TextEditingController searchTextController = TextEditingController();
+  SearchMoviesPage({super.key});
 
   @override
   Widget build(BuildContext context) {

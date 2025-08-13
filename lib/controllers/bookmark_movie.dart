@@ -5,12 +5,6 @@ class BookMarkMoviesController extends GetxController {
   RxList<Map<String, dynamic>> favorites = <Map<String, dynamic>>[].obs;
   final storage = GetStorage();
 
-  @override
-  void onInit() {
-    super.onInit();
-    refreshFavorites();
-  }
-
   void refreshFavorites() {
     final storedFavorites = storage.read<List<dynamic>>('favorite_movies') ?? [];
     favorites.value = List<Map<String, dynamic>>.from(storedFavorites);
@@ -32,5 +26,11 @@ class BookMarkMoviesController extends GetxController {
 
   bool isFavorite(int id) {
     return favorites.any((m) => m['id'] == id);
+  }
+
+  @override
+  void onInit() {
+    refreshFavorites();
+    super.onInit();
   }
 }

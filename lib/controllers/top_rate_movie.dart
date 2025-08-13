@@ -9,7 +9,7 @@ class TopRateMovieController extends GetxController {
   final RxList<ResultTopRate> topMovies =RxList();
   final RxBool isLoading = RxBool(false);
 
-  int get itemCount => isLoading.value ? 8 : topMovies.length;
+  int get itemCount => isLoading.value ? 12 : topMovies.length;
   bool get hasMovies => topMovies.isNotEmpty;
   bool get isLoadingNow => isLoading.value;
 
