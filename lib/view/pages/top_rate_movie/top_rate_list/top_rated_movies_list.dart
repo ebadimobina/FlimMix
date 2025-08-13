@@ -7,7 +7,6 @@ import '../../movie_details/movies_details_page.dart';
 
 class TopRatedMoviesList extends StatelessWidget {
   final TopRateMovieController controller = Get.find<TopRateMovieController>();
-
   TopRatedMoviesList({super.key});
 
   @override

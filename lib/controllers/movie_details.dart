@@ -12,7 +12,6 @@ class MovieDetailsController extends GetxController {
   late MovieBase movie;
   RxBool isFavorite = RxBool(false);
   RxBool get isFav => isFavorite;
-
   RxList<CastMember> castList = RxList();
   final storage = GetStorage();
   final favoritesKey = 'favorite_movies';
@@ -38,21 +37,6 @@ class MovieDetailsController extends GetxController {
   String get year => movie.releaseDate?.year.toString() ?? '----';
 
   List<String> get genres => getGenreNames(movie.genreIds);
-
-  @override
-  void onInit() {
-    final args = Get.arguments;
-    if (args is MovieBase) {
-      movie = args;
-    } else {
-      Get.back();
-      throw Exception("Invalid movie model");
-    }
-
-    loadFavoriteStatus();
-    loadCredits(movie.id);
-    super.onInit();
-  }
 
   void loadFavoriteStatus() {
     final favorites = storage.read<List<dynamic>>(favoritesKey) ?? [];
@@ -86,7 +70,6 @@ class MovieDetailsController extends GetxController {
     bookMarkController.refreshFavorites();
   }
 
-
   void shareMovie(context) {
     final movieUrl = 'https://www.themoviedb.org/movie/${movie.id}';
     final message = 'Check out this movie: $title\n\n$movieUrl';
@@ -104,5 +87,20 @@ class MovieDetailsController extends GetxController {
     } catch (e) {
       Get.snackbar('Error', 'Failed to load cast list');
     }
+  }
+
+  @override
+  void onInit() {
+    final args = Get.arguments;
+    if (args is MovieBase) {
+      movie = args;
+    } else {
+      Get.back();
+      throw Exception("Invalid movie model");
+    }
+
+    loadFavoriteStatus();
+    loadCredits(movie.id);
+    super.onInit();
   }
 }

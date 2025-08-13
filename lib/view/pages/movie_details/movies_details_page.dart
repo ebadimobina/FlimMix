@@ -4,7 +4,6 @@ import '../../../controllers/movie_details.dart';
 
 class MoviesDetailsPage extends StatelessWidget {
   final controller = Get.put(MovieDetailsController());
-
   MoviesDetailsPage({super.key});
 
   @override

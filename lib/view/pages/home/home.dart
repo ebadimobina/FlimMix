@@ -11,12 +11,11 @@ import '../top_rate_movie/top_rate_list/top_rated_movies_list.dart';
 import '../top_rate_movie/top_rated_movies.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final controller = Get.put(HomeController());
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(HomeController());
-
     final List<Widget> pages = [
       const HomeContent(),
       SearchMoviesPage(),
