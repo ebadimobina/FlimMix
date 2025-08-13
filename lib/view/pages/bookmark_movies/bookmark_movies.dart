@@ -25,7 +25,7 @@ class BookMarkMoviesPage extends StatelessWidget {
         ),
       ),
       body: Obx(() {
-        final favorites = controller.favorites;
+        final favorites = controller.favoritesMovies;
         if (favorites.isEmpty) {
           return const Center(child: Text('No bookmarked movies'));
         }

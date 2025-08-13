@@ -33,8 +33,6 @@ mixin ThemeColors {
   static Color neutral15 = const Color(0xff262625);
   static Color onTertiaryContainer = const Color(0xff4B2F00);
   static Color keyboardOverlyBackground = const Color(0xff333333);
-
-  //labels
   static Color label_0 = const Color(0xffffffff);
   static Color label_1 = const Color(0xffef4e41);
   static Color label_2 = const Color(0xff6f2299);

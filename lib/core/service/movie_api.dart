@@ -1,5 +1,4 @@
-import 'package:flutter/cupertino.dart';
-
+import 'package:flutter/foundation.dart';
 import '../../model/dto/cast_movie.dart';
 import '../../model/dto/popular_movie.dart';
 import '../../model/dto/search_movie.dart';
@@ -7,76 +6,71 @@ import '../../model/dto/top_rate_movie.dart';
 import '../../model/network/api_manager.dart';
 import '../../model/network/endpoints.dart';
 
+/// Custom exception for Movie API
+class MovieApiException implements Exception {
+  final String message;
+  final int? statusCode;
+
+  MovieApiException(this.message, {this.statusCode});
+
+  @override
+  String toString() => 'MovieApiException(statusCode: $statusCode, message: $message)';
+}
+
 class MovieApi {
-  //use central dio
   final ApiManager _apiManager = ApiManager();
 
-  //fetch top rate movie from TMDB
-  Future<TopRateMovie> fetchTopRatedMovies() async {
+  /// Generic method for GET requests and converting JSON to model
+  Future<T> _get<T>(String url, T Function(dynamic) fromJson,
+      {Map<String, dynamic>? queryParameters}) async {
     try {
-      final response = await _apiManager.dio.get(Endpoints.topRated);
+      final response =
+      await _apiManager.dio.get(url, queryParameters: queryParameters);
       if (response.statusCode == 200) {
-        return TopRateMovie.fromJson(response.data);
+        return fromJson(response.data);
       } else {
-        throw Exception('Failed with status code: ${response.statusCode}');
+        throw MovieApiException(
+          'Failed with status code: ${response.statusCode}',
+          statusCode: response.statusCode,
+        );
       }
     } catch (e) {
-      throw Exception('Failed to load movies: $e');
+      throw MovieApiException('Failed to load data: $e');
     }
   }
 
-  //fetch movie credits from TMDB
+  /// Fetch top-rated movies
+  Future<TopRateMovie> fetchTopRatedMovies() async {
+    return _get(Endpoints.topRated, (data) => TopRateMovie.fromJson(data));
+  }
+
+  /// Fetch movie credits
   Future<MovieCredits> fetchMovieCredits(int movieId) async {
+    debugPrint('Fetching credits for movie ID: $movieId');
     try {
-      print('Fetching credits for movie ID: $movieId');
-      final response =
-          await _apiManager.dio.get(Endpoints.movieCredits(movieId));
-      print('Status code: ${response.statusCode}');
-      print('Response: ${response.data}');
-      if (response.statusCode == 200) {
-        return MovieCredits.fromJson(response.data);
-      } else {
-        throw Exception(
-            'Failed to load credits with status code: ${response.statusCode}');
-      }
+      final credits = await _get(
+        Endpoints.movieCredits(movieId),
+            (data) => MovieCredits.fromJson(data),
+      );
+      return credits;
     } catch (e) {
       debugPrint('fetchMovieCredits error: $e');
       rethrow;
     }
   }
 
-  //fetch popular movie from TMDB
+  /// Fetch popular movies
   Future<Popular> fetchPopularMovies() async {
-    try {
-      final response = await _apiManager.dio.get(Endpoints.popular);
-      if (response.statusCode == 200) {
-        return Popular.fromJson(response.data);
-      } else {
-        throw Exception(
-            'Failed to load popular movies with status code: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Failed to load popular movies: $e');
-    }
+    return _get(Endpoints.popular, (data) => Popular.fromJson(data));
   }
 
-  //Search movie from TMDB
+  /// Search for movies
   Future<SearchMovieDto> searchMovies(String query) async {
-    try {
-      final response = await _apiManager.dio.get(
-        Endpoints.searchMovie,
-        queryParameters: {
-          'query': query,
-        },
-      );
-      if (response.statusCode == 200) {
-        return SearchMovieDto.fromJson(response.data);
-      } else {
-        throw Exception(
-            'Failed to search movies with status code: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Failed to search movies: $e');
-    }
+    final encodedQuery = Uri.encodeQueryComponent(query);
+    return _get(
+      Endpoints.searchMovie,
+          (data) => SearchMovieDto.fromJson(data),
+      queryParameters: {'query': encodedQuery},
+    );
   }
 }
