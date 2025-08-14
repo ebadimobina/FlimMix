@@ -19,5 +19,4 @@ class SearchMovieDto {
       totalResults: json["total_results"],
     );
   }
-
 }

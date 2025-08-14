@@ -2,12 +2,12 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class BookMarkMoviesController extends GetxController {
-  RxList<Map<String, dynamic>> favorites = <Map<String, dynamic>>[].obs;
+  RxList<Map<String, dynamic>> favoritesMovies = <Map<String, dynamic>>[].obs;
   final storage = GetStorage();
 
   void refreshFavorites() {
     final storedFavorites = storage.read<List<dynamic>>('favorite_movies') ?? [];
-    favorites.value = List<Map<String, dynamic>>.from(storedFavorites);
+    favoritesMovies.value = List<Map<String, dynamic>>.from(storedFavorites);
   }
 
   void toggleFavorite(Map<String, dynamic> movie) {
@@ -25,7 +25,7 @@ class BookMarkMoviesController extends GetxController {
   }
 
   bool isFavorite(int id) {
-    return favorites.any((m) => m['id'] == id);
+    return favoritesMovies.any((m) => m['id'] == id);
   }
 
   @override

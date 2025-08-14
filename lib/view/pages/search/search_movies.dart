@@ -13,17 +13,17 @@ class SearchMoviesPage extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+          padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
           child: TextField(
             controller: searchTextController,
             onChanged: controller.onSearchTextChanged,
-            style: const TextStyle(color: Colors.black87),
+            style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
               filled: true,
               fillColor: Colors.grey.shade200,
-              prefixIcon: const Icon(Icons.search, color: Colors.grey),
+              prefixIcon: Icon(Icons.search, color: Colors.grey),
               suffixIcon: IconButton(
-                icon: const Icon(Icons.filter_list_alt, color: Colors.grey),
+                icon: Icon(Icons.filter_list_alt, color: Colors.grey),
                 onPressed: () => showFilterDialog(context),
                 tooltip: 'Filter by rating',
               ),
@@ -32,7 +32,7 @@ class SearchMoviesPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
               ),
-              contentPadding: const EdgeInsets.symmetric(vertical: 14),
+              contentPadding: EdgeInsets.symmetric(vertical: 14),
             ),
           ),
         ),
@@ -50,10 +50,10 @@ class SearchMoviesPage extends StatelessWidget {
   void showFilterDialog(BuildContext context) {
     Get.bottomSheet(
       Container(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
           boxShadow: [
             BoxShadow(color: Colors.black12, blurRadius: 8, spreadRadius: 2),
           ],
@@ -61,13 +61,13 @@ class SearchMoviesPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
+            Text(
               'Sort by Rating',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             ListTile(
-              title: const Text('High to Low'),
+              title: Text('High to Low'),
               leading: Obx(() => Radio<String>(
                     value: 'high',
                     groupValue: controller.sortByRating.value,
@@ -79,7 +79,7 @@ class SearchMoviesPage extends StatelessWidget {
                   )),
             ),
             ListTile(
-              title: const Text('Low to High'),
+              title: Text('Low to High'),
               leading: Obx(() => Radio<String>(
                     value: 'low',
                     groupValue: controller.sortByRating.value,
@@ -92,7 +92,7 @@ class SearchMoviesPage extends StatelessWidget {
             ),
             TextButton(
               onPressed: () => Get.back(),
-              child: const Text('Close'),
+              child: Text('Close'),
             )
           ],
         ),

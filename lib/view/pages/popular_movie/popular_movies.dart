@@ -20,7 +20,7 @@ class PopularMovies extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -35,12 +35,12 @@ class PopularMovies extends StatelessWidget {
                   onTap: onSeeMore,
                   child: Container(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xFFE5E4EA)),
+                      border: Border.all(color: Color(0xFFE5E4EA)),
                       borderRadius: BorderRadius.circular(100),
                     ),
-                    child: const Text(
+                    child: Text(
                       'See more',
                       style: TextStyle(
                         fontSize: 12,
@@ -56,24 +56,24 @@ class PopularMovies extends StatelessWidget {
           controller.isLoading.value
               ? ListView.builder(
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount: 6,
                   itemBuilder: (_, __) => Padding(
                     padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                     child: Row(
                       children: [
                         ShimmerLoadingBox(width: 100, height: 140),
-                        const SizedBox(width: 12),
+                        SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ShimmerLoadingBox(
                                   width: double.infinity, height: 20),
-                              const SizedBox(height: 6),
+                              SizedBox(height: 6),
                               ShimmerLoadingBox(width: 150, height: 14),
-                              const SizedBox(height: 6),
+                              SizedBox(height: 6),
                               ShimmerLoadingBox(width: 80, height: 14),
                             ],
                           ),
@@ -84,7 +84,7 @@ class PopularMovies extends StatelessWidget {
                 )
               : ListView.builder(
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount: min(6, controller.itemCount),
                   itemBuilder: (context, index) {
                     final movie = controller.movieAt(index);
@@ -100,7 +100,7 @@ class PopularMovies extends StatelessWidget {
                         }
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                             vertical: 8, horizontal: 16),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +112,7 @@ class PopularMovies extends StatelessWidget {
                                       width: 100,
                                       height: 140,
                                       color: Colors.grey[300],
-                                      child: const Icon(Icons.broken_image,
+                                      child: Icon(Icons.broken_image,
                                           size: 40, color: Colors.grey),
                                     )
                                   : Image.network(
@@ -124,7 +124,7 @@ class PopularMovies extends StatelessWidget {
                                           Container(color: Colors.grey),
                                     ),
                             ),
-                            const SizedBox(width: 12),
+                            SizedBox(width: 12),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,12 +132,12 @@ class PopularMovies extends StatelessWidget {
                                   Text(title,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 18,
                                         fontFamily: 'Mulish',
                                         fontWeight: FontWeight.w500,
                                       )),
-                                  const SizedBox(height: 5),
+                                  SizedBox(height: 5),
                                   if (movie?.overview != null &&
                                       movie!.overview!.isNotEmpty)
                                     Text(
@@ -150,17 +150,17 @@ class PopularMovies extends StatelessWidget {
                                         height: 1.4,
                                       ),
                                     ),
-                                  const SizedBox(height: 10),
+                                  SizedBox(height: 10),
                                   if (genres.isNotEmpty)
                                     Wrap(
                                       spacing: 10,
                                       runSpacing: 10,
                                       children: genres.take(2).map((name) {
                                         return Container(
-                                          padding: const EdgeInsets.symmetric(
+                                          padding: EdgeInsets.symmetric(
                                               horizontal: 12, vertical: 4),
                                           decoration: BoxDecoration(
-                                            color: const Color(0xFFDBE3FF),
+                                            color: Color(0xFFDBE3FF),
                                             borderRadius:
                                                 BorderRadius.circular(100),
                                           ),
@@ -168,19 +168,19 @@ class PopularMovies extends StatelessWidget {
                                             name,
                                             style:
                                                 textTheme.labelSmall?.copyWith(
-                                              color: const Color(0xFF88A4E8),
+                                              color: Color(0xFF88A4E8),
                                               fontSize: 12,
                                             ),
                                           ),
                                         );
                                       }).toList(),
                                     ),
-                                  const SizedBox(height: 22),
+                                  SizedBox(height: 22),
                                   Row(
                                     children: [
-                                      const Icon(Icons.star,
+                                      Icon(Icons.star,
                                           color: Colors.amber, size: 14),
-                                      const SizedBox(width: 4),
+                                      SizedBox(width: 4),
                                       Text(
                                         rating,
                                         style: TextStyle(
@@ -191,7 +191,7 @@ class PopularMovies extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(height: 8),
+                                  SizedBox(height: 8),
                                 ],
                               ),
                             )

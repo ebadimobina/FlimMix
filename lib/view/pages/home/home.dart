@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = [
-      const HomeContent(),
+      HomeContent(),
       SearchMoviesPage(),
       BookMarkMoviesPage(),
     ];
@@ -26,14 +26,14 @@ class HomePage extends StatelessWidget {
           appBar: AppBar(
             title: Text(
               'FilmMix',
-              style: const TextStyle(
+              style: TextStyle(
                 color: Color(0xFF110E47),
               ),
             ),
             centerTitle: true,
             actions: [
               PopupMenuButton<String>(
-                icon: const Icon(Icons.more_vert, color: Colors.black),
+                icon: Icon(Icons.more_vert, color: Colors.black),
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6),
@@ -41,23 +41,23 @@ class HomePage extends StatelessWidget {
                 elevation: 3,
                 onSelected: (value) {
                   if (value == 'about') {
-                    Get.to(() => const AboutMePage());
+                    Get.to(() => AboutMePage());
                   } else if (value == 'Exit') {
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                        title: const Text('Exit App'),
-                        content: const Text('Are you sure you want to exit?'),
+                        title: Text('Exit App'),
+                        content: Text('Are you sure you want to exit?'),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.of(context).pop(),
-                            child: const Text('Cancel'),
+                            child: Text('Cancel'),
                           ),
                           TextButton(
                             onPressed: () {
                               SystemNavigator.pop();
                             },
-                            child: const Text('Exit'),
+                            child: Text('Exit'),
                           ),
                         ],
                       ),
@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
                   PopupMenuItem(
                     value: 'about',
                     child: Row(
-                      children: const [
+                      children: [
                         SizedBox(width: 10),
                         Text('About',
                             style: TextStyle(
@@ -81,7 +81,7 @@ class HomePage extends StatelessWidget {
                   PopupMenuItem(
                     value: 'Exit',
                     child: Row(
-                      children: const [
+                      children: [
                         SizedBox(width: 10),
                         Text('Exit',
                             style: TextStyle(
@@ -101,7 +101,7 @@ class HomePage extends StatelessWidget {
           ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: controller.currentIndex.value,
-            selectedItemColor: const Color(0xFF110E47),
+            selectedItemColor: Color(0xFF110E47),
             onTap: (index) {
               controller.changePage(index);
             },
@@ -148,7 +148,7 @@ class HomeContent extends StatelessWidget {
             Get.to(() => TopRatedMoviesList());
           },
         ),
-        const SizedBox(height: 25),
+        SizedBox(height: 25),
         PopularMovies(
           onSeeMore: () {
             Get.to(() => PopularMoviesList());
