@@ -15,7 +15,7 @@ class MoviesDetailsPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -33,7 +33,7 @@ class MoviesDetailsPage extends StatelessWidget {
                         errorBuilder: (_, __, ___) => Container(
                           height: 350,
                           color: Colors.grey.shade800,
-                          child: const Icon(Icons.movie, size: 100),
+                          child: Icon(Icons.movie, size: 100),
                         ),
                       ),
                     ),
@@ -53,7 +53,7 @@ class MoviesDetailsPage extends StatelessWidget {
                     left: 8,
                     top: 8,
                     child: IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.white),
+                      icon: Icon(Icons.arrow_back, color: Colors.white),
                       onPressed: () => Navigator.of(context).pop(),
                       tooltip: 'Back',
                     ),
@@ -62,7 +62,7 @@ class MoviesDetailsPage extends StatelessWidget {
                     right: 56,
                     top: 8,
                     child: IconButton(
-                      icon: const Icon(Icons.share, color: Colors.white),
+                      icon: Icon(Icons.share, color: Colors.white),
                       onPressed: () => controller.shareMovie(context),
                       tooltip: 'Share',
                     ),
@@ -95,7 +95,7 @@ class MoviesDetailsPage extends StatelessWidget {
                           Shadow(
                             color: Colors.black,
                             blurRadius: 8,
-                            offset: const Offset(0, 2),
+                            offset: Offset(0, 2),
                           ),
                         ],
                       ),
@@ -103,23 +103,23 @@ class MoviesDetailsPage extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               Row(
                 children: [
                   Container(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
                       color: colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.star, color: Colors.amber, size: 20),
-                        const SizedBox(width: 6),
+                        Icon(Icons.star, color: Colors.amber, size: 20),
+                        SizedBox(width: 6),
                         Text(
                           controller.vote,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
                           ),
@@ -127,15 +127,15 @@ class MoviesDetailsPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Spacer(),
+                  Spacer(),
                   Chip(
                     label: Text(controller.releaseDate),
-                    avatar: const Icon(Icons.calendar_today, size: 16),
+                    avatar: Icon(Icons.calendar_today, size: 16),
                     backgroundColor: colorScheme.surfaceContainerHighest,
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               Text(
                 controller.movie.originalTitle,
                 style: textTheme.titleMedium?.copyWith(
@@ -143,18 +143,18 @@ class MoviesDetailsPage extends StatelessWidget {
                   color: Colors.grey.shade600,
                 ),
               ),
-              const SizedBox(height: 6),
+              SizedBox(height: 6),
               Row(
                 children: [
-                  const Icon(Icons.trending_up, color: Colors.green, size: 18),
-                  const SizedBox(width: 6),
+                  Icon(Icons.trending_up, color: Colors.green, size: 18),
+                  SizedBox(width: 6),
                   Text(
                     'Popularity: ${controller.movie.popularity?.toStringAsFixed(0)}',
                     style: textTheme.bodySmall,
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               Text(
                 'Overview',
                 style: textTheme.titleLarge?.copyWith(
@@ -162,13 +162,13 @@ class MoviesDetailsPage extends StatelessWidget {
                   color: Color(0xFF110E47),
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Text(
                 controller.overview,
                 style: textTheme.bodyLarge
                     ?.copyWith(height: 1.5, color: Colors.grey.shade800),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               if (controller.genres.isNotEmpty) ...[
                 Text(
                   'Genres',
@@ -177,22 +177,22 @@ class MoviesDetailsPage extends StatelessWidget {
                     color: Color(0xFF110E47),
                   ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 Wrap(
                   spacing: 10,
                   runSpacing: 10,
                   children: controller.genres.map((name) {
                     return Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                           horizontal: 12, vertical: 4),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFDBE3FF), // #DBE3FF
+                        color: Color(0xFFDBE3FF), // #DBE3FF
                         borderRadius: BorderRadius.circular(100),
                       ),
                       child: Text(
                         name,
                         style: textTheme.labelSmall?.copyWith(
-                          color: const Color(0xFF88A4E8),
+                          color: Color(0xFF88A4E8),
                           fontSize: 12,
                         ),
                       ),
@@ -200,7 +200,7 @@ class MoviesDetailsPage extends StatelessWidget {
                   }).toList(),
                 ),
               ],
-              const SizedBox(height: 32),
+              SizedBox(height: 32),
               Text(
                 'Cast',
                 style: textTheme.titleLarge?.copyWith(
@@ -208,7 +208,7 @@ class MoviesDetailsPage extends StatelessWidget {
                   color: Color(0xFF110E47),
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               Obx(() {
                 if (controller.castList.isEmpty) {
                   return Text('No cast found');
@@ -222,7 +222,7 @@ class MoviesDetailsPage extends StatelessWidget {
                       final cast = controller.castList[index];
                       return Container(
                         width: 80,
-                        margin: const EdgeInsets.only(right: 12),
+                        margin: EdgeInsets.only(right: 12),
                         child: Column(
                           children: [
                             CircleAvatar(
@@ -232,18 +232,18 @@ class MoviesDetailsPage extends StatelessWidget {
                                       'https://image.tmdb.org/t/p/w200${cast.profilePath}')
                                   : null,
                               child: cast.profilePath == null
-                                  ? const Icon(Icons.person, size: 40)
+                                  ? Icon(Icons.person, size: 40)
                                   : null,
                             ),
-                            const SizedBox(height: 4),
+                            SizedBox(height: 4),
                             Text(
                               cast.name,
-                              style: const TextStyle(fontSize: 12),
+                              style: TextStyle(fontSize: 12),
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               cast.character ?? '',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontSize: 10, color: Colors.grey),
                               overflow: TextOverflow.ellipsis,
                             ),

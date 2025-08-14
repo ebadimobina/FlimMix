@@ -14,7 +14,8 @@ class MovieApiException implements Exception {
   MovieApiException(this.message, {this.statusCode});
 
   @override
-  String toString() => 'MovieApiException(statusCode: $statusCode, message: $message)';
+  String toString() =>
+      'MovieApiException(statusCode: $statusCode, message: $message)';
 }
 
 class MovieApi {
@@ -25,7 +26,7 @@ class MovieApi {
       {Map<String, dynamic>? queryParameters}) async {
     try {
       final response =
-      await _apiManager.dio.get(url, queryParameters: queryParameters);
+          await _apiManager.dio.get(url, queryParameters: queryParameters);
       if (response.statusCode == 200) {
         return fromJson(response.data);
       } else {
@@ -50,7 +51,7 @@ class MovieApi {
     try {
       final credits = await _get(
         Endpoints.movieCredits(movieId),
-            (data) => MovieCredits.fromJson(data),
+        (data) => MovieCredits.fromJson(data),
       );
       return credits;
     } catch (e) {
@@ -69,7 +70,7 @@ class MovieApi {
     final encodedQuery = Uri.encodeQueryComponent(query);
     return _get(
       Endpoints.searchMovie,
-          (data) => SearchMovieDto.fromJson(data),
+      (data) => SearchMovieDto.fromJson(data),
       queryParameters: {'query': encodedQuery},
     );
   }

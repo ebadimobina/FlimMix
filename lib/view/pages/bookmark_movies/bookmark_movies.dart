@@ -20,19 +20,19 @@ class BookMarkMoviesPage extends StatelessWidget {
           'Bookmarked Movies',
           style: textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.bold,
-            color: const Color(0xFF110E47),
+            color: Color(0xFF110E47),
           ),
         ),
       ),
       body: Obx(() {
         final favorites = controller.favoritesMovies;
         if (favorites.isEmpty) {
-          return const Center(child: Text('No bookmarked movies'));
+          return Center(child: Text('No bookmarked movies'));
         }
 
         return ListView.builder(
           itemCount: favorites.length,
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: EdgeInsets.symmetric(vertical: 8),
           itemBuilder: (context, index) {
             final item = favorites[index];
             final movie = MovieModel(
@@ -58,7 +58,7 @@ class BookMarkMoviesPage extends StatelessWidget {
                 controller.refreshFavorites();
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -69,7 +69,7 @@ class BookMarkMoviesPage extends StatelessWidget {
                         width: 100,
                         height: 140,
                         color: Colors.grey[300],
-                        child: const Icon(Icons.broken_image,
+                        child: Icon(Icons.broken_image,
                             size: 40, color: Colors.grey),
                       )
                           : Image.network(
@@ -79,7 +79,7 @@ class BookMarkMoviesPage extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,12 +88,12 @@ class BookMarkMoviesPage extends StatelessWidget {
                             movie.title,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(height: 5),
+                          SizedBox(height: 5),
                           if (movie.overview != null && movie.overview!.isNotEmpty)
                             Text(
                               movie.overview!,
@@ -105,14 +105,14 @@ class BookMarkMoviesPage extends StatelessWidget {
                                 height: 1.4,
                               ),
                             ),
-                          const SizedBox(height: 10),
+                          SizedBox(height: 10),
                           Row(
                             children: [
-                              const Icon(Icons.star, color: Colors.amber, size: 14),
-                              const SizedBox(width: 4),
+                              Icon(Icons.star, color: Colors.amber, size: 14),
+                              SizedBox(width: 4),
                               Text(
                                 '$rating / 10',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 12,
                                   height: 1.25,
                                   color: Color(0xFF9C9C9C),
@@ -120,7 +120,7 @@ class BookMarkMoviesPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8),
                         ],
                       ),
                     )

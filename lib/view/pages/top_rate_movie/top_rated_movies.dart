@@ -21,7 +21,7 @@ class TopRatedMovies extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -37,13 +37,13 @@ class TopRatedMovies extends StatelessWidget {
                   onTap: onSeeMore,
                   child: Container(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xFFE5E4EA)),
+                      border: Border.all(color: Color(0xFFE5E4EA)),
                       borderRadius:
                           BorderRadius.circular(100), // border-radius: 100px
                     ),
-                    child: const Text(
+                    child: Text(
                       'See All',
                       style: TextStyle(
                         fontSize: 12,
@@ -56,25 +56,25 @@ class TopRatedMovies extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           SizedBox(
             height: 290,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: min(12, controller.itemCount),
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16),
               itemBuilder: (context, index) {
                 if (controller.isLoading.value) {
                   return Container(
                     width: 160,
-                    margin: const EdgeInsets.only(right: 12),
+                    margin: EdgeInsets.only(right: 12),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ShimmerLoadingBox(width: 160, height: 240),
-                        const SizedBox(height: 8),
+                         SizedBox(height: 8),
                         ShimmerLoadingBox(width: 120, height: 20),
-                        const SizedBox(height: 6),
+                         SizedBox(height: 6),
                         ShimmerLoadingBox(width: 60, height: 14),
                       ],
                     ),
@@ -94,7 +94,7 @@ class TopRatedMovies extends StatelessWidget {
                     },
                     child: Container(
                       width: 160,
-                      margin: const EdgeInsets.only(right: 12),
+                      margin: EdgeInsets.only(right: 12),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -107,7 +107,7 @@ class TopRatedMovies extends StatelessWidget {
                                       color: Colors.grey[300],
                                       height: 290,
                                       alignment: Alignment.center,
-                                      child: const Icon(Icons.broken_image,
+                                      child: Icon(Icons.broken_image,
                                           size: 50, color: Colors.grey),
                                     )
                                   : Image.network(poster,
@@ -116,7 +116,7 @@ class TopRatedMovies extends StatelessWidget {
                                           Container(color: Colors.grey)),
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8),
                           Text(
                             title,
                             maxLines: 1,
@@ -128,12 +128,12 @@ class TopRatedMovies extends StatelessWidget {
                               letterSpacing: 0.02,
                             ),
                           ),
-                          const SizedBox(height: 3),
+                          SizedBox(height: 3),
                           Row(
                             children: [
-                              const Icon(Icons.star,
+                               Icon(Icons.star,
                                   color: Colors.amber, size: 14),
-                              const SizedBox(width: 4),
+                               SizedBox(width: 4),
                               Text(
                                 rating,
                                 style: TextStyle(
