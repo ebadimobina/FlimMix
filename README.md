@@ -3,7 +3,7 @@
 **FilmMix** isn’t just another movie app — it’s your personal cinema, right in your pocket.  
 Built with **Flutter**, powered by **The Movie Database (TMDb)**, and designed with elegance in mind, FilmMix lets you discover the hottest, top-rated, and upcoming films faster than you can make popcorn 🍿.
 
----
+
 
 ## 🚀 Why FilmMix Rocks
 
@@ -15,7 +15,8 @@ Forget clunky interfaces and endless loading spinners. **FilmMix** is all about:
 - 🧩 **Clean MVVM architecture** with GetX for maintainability  
 - 💖 **Beautifully crafted UI** that makes browsing movies a joy
 
----
+
+
 
 ## 🔑 Features at a Glance
 
@@ -26,7 +27,8 @@ Forget clunky interfaces and endless loading spinners. **FilmMix** is all about:
 - 📤 Share any movie with friends
 - 🎯 Cross-platform: Runs flawlessly on Android & iOS
 
----
+
+
 
 ## 🛠 Tech Stack
 
@@ -35,15 +37,18 @@ Forget clunky interfaces and endless loading spinners. **FilmMix** is all about:
 - **Dio** for blazing-fast API calls 🌐  
 - **TMDb API** for movie data 🎞️  
 
----
+
+
 
 ## 📸 App Preview
 
-> _This is where your gorgeous renders/screenshots will go_  
-![FilmMix Preview](asset/picture/review.png)  
+<p align="center">
+  <img src="asset/picture/review.png" alt="FilmMix Preview" width="600"/>
+</p>
 
 
----
+
+
 
 ## 🧑‍💻 Getting Started
 
