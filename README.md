@@ -40,7 +40,7 @@ Forget clunky interfaces and endless loading spinners. **FilmMix** is all about:
 ## 📸 App Preview
 
 > _This is where your gorgeous renders/screenshots will go_  
-![FilmMix Preview](asset/picture/img.png)  
+![FilmMix Preview](asset/picture/review.png)  
 
 
 ---
