@@ -42,7 +42,7 @@ Forget clunky interfaces and endless loading spinners. **FilmMix** is all about:
 ## App Preview
 
 <p align="center">
-  <img src="asset/picture/review.png" alt="FilmMix Preview" width="600"/>
+  <img src="asset/picture/MobileAppPhone.png" alt="FilmMix Preview" width="700"/>
 </p>
 
 
