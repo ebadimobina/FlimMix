@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:dio/dio.dart';
 import '../../model/dto/cast_movie.dart';
 import '../../model/dto/popular_movie.dart';
 import '../../model/dto/search_movie.dart';
@@ -35,6 +36,12 @@ class MovieApi {
           statusCode: response.statusCode,
         );
       }
+    } on DioException catch (e) {
+      final status = e.response?.statusCode;
+      final message = e.response?.data is Map<String, dynamic>
+          ? (e.response?.data['status_message'] ?? e.message)
+          : e.message;
+      throw MovieApiException(message ?? 'Network error', statusCode: status);
     } catch (e) {
       throw MovieApiException('Failed to load data: $e');
     }
