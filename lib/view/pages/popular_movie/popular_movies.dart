@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../controllers/popular_movie.dart';
 import '../../../core/widgets/shimmer.dart';
 import '../movie_details/movies_details_page.dart';
@@ -115,12 +116,14 @@ class PopularMovies extends StatelessWidget {
                                       child: Icon(Icons.broken_image,
                                           size: 40, color: Colors.grey),
                                     )
-                                  : Image.network(
-                                      poster,
+                                  : CachedNetworkImage(
+                                      imageUrl: poster,
                                       width: 100,
                                       height: 140,
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, __, ___) =>
+                                      placeholder: (context, url) =>
+                                          Container(color: Colors.grey[300]),
+                                      errorWidget: (context, url, error) =>
                                           Container(color: Colors.grey),
                                     ),
                             ),

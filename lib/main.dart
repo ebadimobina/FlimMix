@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'controllers/home_controller.dart';
-import 'controllers/popular_movie.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'core/router/movie_pages.dart';
 import 'core/router/movie_routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Get.put(HomeController());
-  Get.put(PopularMovieController());
+  await dotenv.load(fileName: ".env");
+  await GetStorage.init();
   runApp(const MyApp());
 }
 

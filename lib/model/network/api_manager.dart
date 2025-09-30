@@ -1,13 +1,16 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiManager {
   final Dio _dio = Dio();
 
   ApiManager() {
+    final bearerToken = dotenv.env['TMDB_BEARER'];
     _dio.options = BaseOptions(
       baseUrl: 'https://api.themoviedb.org/3',
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhY2JkMjEyYzIxMGQyMzQwMGJjZDllNDFlNTQzYTA3YiIsInN1YiI6IjVkZGRhYTkxNGY1ODAxMDAxNmY5NzEwNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Skgy8lPWp-f23nZhMglFJ2aDrmemD8iCJNtsNrjx1Ko',
+        if (bearerToken != null && bearerToken.isNotEmpty)
+          'Authorization': 'Bearer $bearerToken',
         'Content-Type': 'application/json',
       },
       receiveTimeout: const Duration(seconds: 10),
@@ -16,16 +19,7 @@ class ApiManager {
       validateStatus: (status) => status != null && status < 500,
     );
 
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) {
-          options.queryParameters.addAll({
-            'api_key': 'acbd212c210d23400bcd9e41e543a07b',
-          });
-          return handler.next(options);
-        },
-      ),
-    );
+    // Remove api_key injection; prefer bearer token via Authorization header.
   }
 
   Future<Response?> dioGetRequest(String endpoint, [Map<String, dynamic>? params]) async {

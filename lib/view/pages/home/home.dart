@@ -11,7 +11,7 @@ import '../top_rate_movie/top_rate_list/top_rated_movies_list.dart';
 import '../top_rate_movie/top_rated_movies.dart';
 
 class HomePage extends StatelessWidget {
-  final controller = Get.put(HomeController());
+  final controller = Get.find<HomeController>();
   HomePage({super.key});
 
   @override
