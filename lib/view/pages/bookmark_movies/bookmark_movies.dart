@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../controllers/bookmark_movie.dart';
 import '../../../model/dto/movie.dart';
 import '../movie_details/movies_details_page.dart';
@@ -23,6 +24,8 @@ class BookMarkMoviesPage extends StatelessWidget {
             color: Color(0xFF110E47),
           ),
         ),
+        backgroundColor: Colors.white,
+        elevation: 0,
       ),
       body: Obx(() {
         final favorites = controller.favoritesMovies;
@@ -72,11 +75,15 @@ class BookMarkMoviesPage extends StatelessWidget {
                         child: Icon(Icons.broken_image,
                             size: 40, color: Colors.grey),
                       )
-                          : Image.network(
-                        'https://image.tmdb.org/t/p/w200${movie.posterPath}',
+                          : CachedNetworkImage(
+                        imageUrl: 'https://image.tmdb.org/t/p/w200${movie.posterPath}',
                         width: 100,
                         height: 140,
                         fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            Container(color: Colors.grey[300]),
+                        errorWidget: (context, url, error) =>
+                            Container(color: Colors.grey),
                       ),
                     ),
                     SizedBox(width: 12),

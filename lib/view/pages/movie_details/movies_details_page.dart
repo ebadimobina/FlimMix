@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../controllers/movie_details.dart';
 
 class MoviesDetailsPage extends StatelessWidget {
@@ -13,6 +14,32 @@ class MoviesDetailsPage extends StatelessWidget {
     final textTheme = theme.textTheme;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.share, color: Colors.white),
+            onPressed: () => controller.shareMovie(context),
+          ),
+          Obx(
+            () => IconButton(
+              icon: Icon(
+                  controller.isFav.value == true
+                      ? Icons.favorite
+                      : Icons.favorite_border,
+                  color: controller.isFav.value == true
+                      ? Colors.red
+                      : Colors.white),
+              onPressed: controller.toggleFavorite,
+            ),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(16),
@@ -25,12 +52,17 @@ class MoviesDetailsPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                     child: Hero(
                       tag: controller.movie.id,
-                      child: Image.network(
-                        controller.posterUrl,
+                      child: CachedNetworkImage(
+                        imageUrl: controller.posterUrl,
                         height: 350,
                         width: double.infinity,
                         fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => Container(
+                        placeholder: (context, url) => Container(
+                          height: 350,
+                          color: Colors.grey.shade300,
+                          child: Icon(Icons.movie, size: 100),
+                        ),
+                        errorWidget: (context, url, error) => Container(
                           height: 350,
                           color: Colors.grey.shade800,
                           child: Icon(Icons.movie, size: 100),
@@ -46,41 +78,6 @@ class MoviesDetailsPage extends StatelessWidget {
                         begin: Alignment.bottomCenter,
                         end: Alignment.topCenter,
                         colors: [Colors.black, Colors.transparent],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 8,
-                    top: 8,
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_back, color: Colors.white),
-                      onPressed: () => Navigator.of(context).pop(),
-                      tooltip: 'Back',
-                    ),
-                  ),
-                  Positioned(
-                    right: 56,
-                    top: 8,
-                    child: IconButton(
-                      icon: Icon(Icons.share, color: Colors.white),
-                      onPressed: () => controller.shareMovie(context),
-                      tooltip: 'Share',
-                    ),
-                  ),
-                  Positioned(
-                    right: 8,
-                    top: 8,
-                    child: Obx(
-                      () => IconButton(
-                        icon: Icon(
-                            controller.isFav.value == true
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: controller.isFav.value == true
-                                ? Colors.red
-                                : Colors.white),
-                        onPressed: controller.toggleFavorite,
-                        tooltip: 'Favorite',
                       ),
                     ),
                   ),
@@ -227,13 +224,18 @@ class MoviesDetailsPage extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               radius: 50,
-                              backgroundImage: cast.profilePath != null
-                                  ? NetworkImage(
-                                      'https://image.tmdb.org/t/p/w200${cast.profilePath}')
-                                  : null,
-                              child: cast.profilePath == null
-                                  ? Icon(Icons.person, size: 40)
-                                  : null,
+                              child: cast.profilePath != null
+                                  ? ClipOval(
+                                      child: CachedNetworkImage(
+                                        imageUrl: 'https://image.tmdb.org/t/p/w200${cast.profilePath}',
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) => Icon(Icons.person, size: 40),
+                                        errorWidget: (context, url, error) => Icon(Icons.person, size: 40),
+                                      ),
+                                    )
+                                  : Icon(Icons.person, size: 40),
                             ),
                             SizedBox(height: 4),
                             Text(

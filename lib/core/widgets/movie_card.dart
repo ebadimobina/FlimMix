@@ -1,6 +1,7 @@
 import 'package:flimmix/core/widgets/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../model/dto/movie.dart';
 import '../../view/pages/movie_details/movies_details_page.dart';
 
@@ -30,16 +31,13 @@ class MovieCard extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               if (imageUrl != null)
-                Image.network(
-                  imageUrl,
+                CachedNetworkImage(
+                  imageUrl: imageUrl,
                   fit: BoxFit.cover,
-                  loadingBuilder: (context, child, progress) {
-                    return progress == null
-                        ? child
-                        : const Center(
-                            child: CircularProgressIndicator(strokeWidth: 2));
-                  },
-                  errorBuilder: (context, error, stackTrace) {
+                  placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                  errorWidget: (context, url, error) {
                     return const Icon(Icons.movie_creation_outlined,
                         color: Colors.grey, size: 50);
                   },

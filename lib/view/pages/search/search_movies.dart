@@ -10,12 +10,19 @@ class SearchMoviesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-          child: TextField(
-            controller: searchTextController,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Search Movies'),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        foregroundColor: Color(0xFF110E47),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+            child: TextField(
+              controller: searchTextController,
             onChanged: controller.onSearchTextChanged,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
@@ -39,7 +46,7 @@ class SearchMoviesPage extends StatelessWidget {
         Obx(() => Expanded(
               child: buildMoviesGrid(
                 title: '',
-                movies: controller.searchResults,
+                movies: controller.searchResults.map((movie) => movie.toJson()).toList(),
                 isLoading: controller.isLoading.value,
               ),
             )),

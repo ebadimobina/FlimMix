@@ -28,9 +28,12 @@ class HomePage extends StatelessWidget {
               'FilmMix',
               style: TextStyle(
                 color: Color(0xFF110E47),
+                fontWeight: FontWeight.bold,
               ),
             ),
             centerTitle: true,
+            backgroundColor: Colors.white,
+            elevation: 0,
             actions: [
               PopupMenuButton<String>(
                 icon: Icon(Icons.more_vert, color: Colors.black),
