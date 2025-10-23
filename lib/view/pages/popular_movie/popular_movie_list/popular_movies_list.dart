@@ -83,7 +83,7 @@ class PopularMoviesList extends StatelessWidget {
                       child: poster.isEmpty
                           ? Container(
                               color: Colors.grey[300],
-                              height: 290,
+                              height: 270,
                               alignment: Alignment.center,
                               child: const Icon(Icons.broken_image,
                                   size: 50, color: Colors.grey),
@@ -91,7 +91,7 @@ class PopularMoviesList extends StatelessWidget {
                           : CachedNetworkImage(
                               imageUrl: poster,
                               width: double.infinity,
-                              height: 290,
+                              height: 270,
                               fit: BoxFit.cover,
                               placeholder: (context, url) =>
                                   Container(color: Colors.grey[300]),

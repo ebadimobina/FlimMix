@@ -7,7 +7,7 @@ import 'core/router/movie_routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: "dotenv.env");
   await GetStorage.init();
   runApp(const MyApp());
 }

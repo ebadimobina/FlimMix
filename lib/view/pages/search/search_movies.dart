@@ -51,6 +51,7 @@ class SearchMoviesPage extends StatelessWidget {
               ),
             )),
       ],
+    ),
     );
   }
 

@@ -18,12 +18,12 @@ class MoviesDetailsPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back, color: Color(0xFF110E47)),
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.share, color: Colors.white),
+            icon: Icon(Icons.share, color: Color(0xFF110E47)),
             onPressed: () => controller.shareMovie(context),
           ),
           Obx(
@@ -34,7 +34,7 @@ class MoviesDetailsPage extends StatelessWidget {
                       : Icons.favorite_border,
                   color: controller.isFav.value == true
                       ? Colors.red
-                      : Colors.white),
+                      :  Color(0xFF110E47)),
               onPressed: controller.toggleFavorite,
             ),
           ),
