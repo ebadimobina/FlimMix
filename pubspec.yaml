@@ -81,7 +81,7 @@ flutter:
   assets:
     - asset/icons/appstore.png
     - asset/icons/playstore.png
-
+    - dotenv.env
   # An image assets can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

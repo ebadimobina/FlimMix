@@ -42,7 +42,7 @@ class TopRatedMovies extends StatelessWidget {
                     decoration: BoxDecoration(
                       border: Border.all(color: Color(0xFFE5E4EA)),
                       borderRadius:
-                          BorderRadius.circular(100), // border-radius: 100px
+                          BorderRadius.circular(100),
                     ),
                     child: Text(
                       'See All',
