@@ -21,6 +21,9 @@ class AboutMePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('About Me'),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        foregroundColor: Color(0xFF110E47),
       ),
       body: Padding(
         padding: EdgeInsets.all(24),

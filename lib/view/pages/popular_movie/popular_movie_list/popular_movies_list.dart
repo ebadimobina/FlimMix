@@ -1,6 +1,7 @@
 import 'package:flimmix/view/pages/movie_details/movies_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../controllers/popular_movie.dart';
 import '../../../../core/widgets/shimmer.dart';
 
@@ -13,9 +14,12 @@ class PopularMoviesList extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Top Rated Movies',
+          'Popular Movies',
         ),
         centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        foregroundColor: Color(0xFF110E47),
       ),
       body: Obx(() {
         if (controller.isLoadingNow) {
@@ -79,17 +83,19 @@ class PopularMoviesList extends StatelessWidget {
                       child: poster.isEmpty
                           ? Container(
                               color: Colors.grey[300],
-                              height: 290,
+                              height: 270,
                               alignment: Alignment.center,
                               child: const Icon(Icons.broken_image,
                                   size: 50, color: Colors.grey),
                             )
-                          : Image.network(
-                              poster,
+                          : CachedNetworkImage(
+                              imageUrl: poster,
                               width: double.infinity,
-                              height: 290,
+                              height: 270,
                               fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => Container(
+                              placeholder: (context, url) =>
+                                  Container(color: Colors.grey[300]),
+                              errorWidget: (context, url, error) => Container(
                                 color: Colors.grey[300],
                                 height: 220,
                                 alignment: Alignment.center,

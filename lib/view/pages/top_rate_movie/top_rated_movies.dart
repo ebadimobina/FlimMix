@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../core/widgets/shimmer.dart';
 import 'package:flimmix/controllers/top_rate_movie.dart';
 
@@ -41,7 +42,7 @@ class TopRatedMovies extends StatelessWidget {
                     decoration: BoxDecoration(
                       border: Border.all(color: Color(0xFFE5E4EA)),
                       borderRadius:
-                          BorderRadius.circular(100), // border-radius: 100px
+                          BorderRadius.circular(100),
                     ),
                     child: Text(
                       'See All',
@@ -110,10 +111,14 @@ class TopRatedMovies extends StatelessWidget {
                                       child: Icon(Icons.broken_image,
                                           size: 50, color: Colors.grey),
                                     )
-                                  : Image.network(poster,
+                                  : CachedNetworkImage(
+                                      imageUrl: poster,
                                       fit: BoxFit.cover,
-                                      errorBuilder: (_, __, ___) =>
-                                          Container(color: Colors.grey)),
+                                      placeholder: (context, url) =>
+                                          Container(color: Colors.grey[300]),
+                                      errorWidget: (context, url, error) =>
+                                          Container(color: Colors.grey),
+                                    ),
                             ),
                           ),
                           SizedBox(height: 8),

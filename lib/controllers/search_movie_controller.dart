@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import '../../../core/service/movie_api.dart';
+import '../model/dto/movie.dart';
 
 class SearchMovieController extends GetxController {
   final searchText = ''.obs;
-  final searchResults = <dynamic>[].obs;
+  final searchResults = <MovieModel>[].obs;
   final isLoading = false.obs;
   var sortByRating = 'none'.obs;
   final movieApi = MovieApi();
@@ -13,10 +14,10 @@ class SearchMovieController extends GetxController {
   void sortResults() {
     if (sortByRating.value == 'high') {
       searchResults.sort(
-          (a, b) => (b['vote_average'] ?? 0).compareTo(a['vote_average'] ?? 0));
+          (a, b) => (b.voteAverage ?? 0).compareTo(a.voteAverage ?? 0));
     } else if (sortByRating.value == 'low') {
       searchResults.sort(
-          (a, b) => (a['vote_average'] ?? 0).compareTo(b['vote_average'] ?? 0));
+          (a, b) => (a.voteAverage ?? 0).compareTo(b.voteAverage ?? 0));
     }
   }
 
