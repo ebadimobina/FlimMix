@@ -12,7 +12,6 @@ class BookMarkMoviesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    final BookMarkMoviesController controller = Get.put(BookMarkMoviesController());
 
     return Scaffold(
       appBar: AppBar(
