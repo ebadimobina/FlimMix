@@ -47,3 +47,9 @@ app.*.map.json
 # Environment files
 .env
 *.env
+
+
+# Local storage and backup files
+GetStorage.*
+*.gs
+*.bak
