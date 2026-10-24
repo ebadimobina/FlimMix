@@ -1,54 +1,49 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter/foundation.dart';
+import 'endpoints.dart';
 
 class ApiManager {
-  final Dio _dio = Dio();
+  static final ApiManager _instance = ApiManager._internal();
+  factory ApiManager() => _instance;
 
-  ApiManager() {
-    final bearerToken = dotenv.env['TMDB_BEARER'];
+  late final Dio _dio;
+
+  ApiManager._internal() {
+    _dio = Dio();
     _dio.options = BaseOptions(
-      baseUrl: 'https://api.themoviedb.org/3',
+      baseUrl: Endpoints.baseUrl,
       headers: {
-        if (bearerToken != null && bearerToken.isNotEmpty)
-          'Authorization': 'Bearer $bearerToken',
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
-      receiveTimeout: const Duration(seconds: 10),
-      sendTimeout: const Duration(seconds: 10),
-      connectTimeout: const Duration(seconds: 10),
-      validateStatus: (status) => status != null && status < 500,
+      connectTimeout: const Duration(seconds: 15),
+      sendTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 15),
+      validateStatus: (status) => status != null && status >= 200 && status < 300,
     );
 
-    // Remove api_key injection; prefer bearer token via Authorization header.
-  }
-
-  Future<Response?> dioGetRequest(String endpoint, [Map<String, dynamic>? params]) async {
-    try {
-      final response = await _dio.get(endpoint, queryParameters: params);
-      return response;
-    } catch (e) {
-      if (e is DioException) handleError(e);
-      return null;
+    if (kDebugMode) {
+      _dio.interceptors.add(
+        InterceptorsWrapper(
+          onRequest: (options, handler) {
+            debugPrint('🚀 [DIO] Request: ${options.method} ${options.uri}');
+            return handler.next(options);
+          },
+          onResponse: (response, handler) {
+            debugPrint('✅ [DIO] Response [${response.statusCode}] from: ${response.requestOptions.path}');
+            return handler.next(response);
+          },
+          onError: (DioException e, handler) {
+            debugPrint('❌ [DIO] Error [${e.response?.statusCode}]: ${e.message} at ${e.requestOptions.uri}');
+            return handler.next(e);
+          },
+        ),
+      );
     }
   }
 
-  Future<Response?> dioPostRequest(String endpoint, dynamic data) async {
-    try {
-      final response = await _dio.post(endpoint, data: data);
-      return response;
-    } catch (e) {
-      if (e is DioException) handleError(e);
-      return null;
-    }
+  Dio get dio {
+    _dio.options.baseUrl = Endpoints.baseUrl;
+    return _dio;
   }
-
-  void handleError(DioException e) {
-    print('❌ Dio Error: ${e.message}');
-    if (e.response != null) {
-      print('📥 Status Code: ${e.response?.statusCode}');
-      print('📥 Response Body: ${e.response?.data}');
-    }
-  }
-
-  Dio get dio => _dio;
 }
