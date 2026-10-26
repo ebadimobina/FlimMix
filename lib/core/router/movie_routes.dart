@@ -5,4 +5,6 @@ class MovieRoutes {
   static const String popularMovie = "/popular_Movie";
   static const String searchMovie = "/search_movie";
   static const String bookmarkMovie = "/bookmark_movie";
+  static const String about = "/about";
+  static const String settings = "/settings";
 }

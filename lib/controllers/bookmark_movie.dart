@@ -1,31 +1,50 @@
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../model/dto/movie.dart';
+import '../model/storage/local_storage_manager.dart';
 
 class BookMarkMoviesController extends GetxController {
-  RxList<Map<String, dynamic>> favoritesMovies = <Map<String, dynamic>>[].obs;
-  final storage = GetStorage();
+  final RxList<MovieModel> allBookmarks = <MovieModel>[].obs;
+  final RxString selectedFilter = 'all'.obs;
 
-  void refreshFavorites() {
-    final storedFavorites = storage.read<List<dynamic>>('favorite_movies') ?? [];
-    favoritesMovies.value = List<Map<String, dynamic>>.from(storedFavorites);
+  List<MovieModel> get filteredMovies {
+    if (selectedFilter.value == 'all') return allBookmarks;
+    return allBookmarks
+        .where((m) => m.watchlistStatus == selectedFilter.value)
+        .toList();
   }
 
-  void toggleFavorite(Map<String, dynamic> movie) {
-    final current = List<Map<String, dynamic>>.from(storage.read<List<dynamic>>('favorite_movies') ?? []);
-    final exists = current.any((m) => m['id'] == movie['id']);
+  int get favoritesCount =>
+      allBookmarks.where((m) => m.watchlistStatus == 'favorite').length;
+  int get watchlistCount =>
+      allBookmarks.where((m) => m.watchlistStatus == 'watchlist').length;
+  int get watchedCount =>
+      allBookmarks.where((m) => m.watchlistStatus == 'watched').length;
 
-    if (exists) {
-      current.removeWhere((m) => m['id'] == movie['id']);
-    } else {
-      current.add(movie);
-    }
+  void setFilter(String filter) {
+    selectedFilter.value = filter;
+  }
 
-    storage.write('favorite_movies', current);
+  void refreshFavorites() {
+    allBookmarks.assignAll(LocalStorageManager.getBookmarks());
+  }
+
+  void setMovieStatus(MovieModel movie, String status) {
+    LocalStorageManager.setMovieStatus(movie, status);
+    refreshFavorites();
+  }
+
+  void toggleFavorite(MovieModel movie) {
+    LocalStorageManager.toggleBookmark(movie);
+    refreshFavorites();
+  }
+
+  void removeBookmark(MovieModel movie) {
+    LocalStorageManager.setMovieStatus(movie, 'none');
     refreshFavorites();
   }
 
   bool isFavorite(int id) {
-    return favoritesMovies.any((m) => m['id'] == id);
+    return allBookmarks.any((m) => m.id == id);
   }
 
   @override
