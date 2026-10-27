@@ -4,104 +4,196 @@ import '../../../controllers/search_movie_controller.dart';
 import '../../../core/widgets/movie_card.dart';
 
 class SearchMoviesPage extends StatelessWidget {
-  final controller = Get.put(SearchMovieController());
-  final TextEditingController searchTextController = TextEditingController();
-  SearchMoviesPage({super.key});
+  final bool isEmbedded;
+  const SearchMoviesPage({super.key, this.isEmbedded = false});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Search Movies'),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        foregroundColor: Color(0xFF110E47),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-            child: TextField(
-              controller: searchTextController,
-            onChanged: controller.onSearchTextChanged,
-            style: TextStyle(color: Colors.black87),
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.grey.shade200,
-              prefixIcon: Icon(Icons.search, color: Colors.grey),
-              suffixIcon: IconButton(
-                icon: Icon(Icons.filter_list_alt, color: Colors.grey),
-                onPressed: () => showFilterDialog(context),
-                tooltip: 'Filter by rating',
+    final controller = Get.isRegistered<SearchMovieController>()
+        ? Get.find<SearchMovieController>()
+        : Get.put(SearchMovieController());
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    final searchController = TextEditingController(text: controller.searchText.value);
+
+    final content = Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 10),
+          child: Obx(
+            () => TextField(
+              controller: searchController,
+              onChanged: controller.onSearchTextChanged,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: theme.cardColor,
+                prefixIcon: Icon(Icons.search, color: theme.colorScheme.primary),
+                suffixIcon: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (controller.searchText.value.isNotEmpty)
+                      IconButton(
+                        icon: const Icon(Icons.clear, size: 20, color: Colors.grey),
+                        onPressed: () {
+                          searchController.clear();
+                          controller.clearSearch();
+                        },
+                      ),
+                    IconButton(
+                      icon: Icon(Icons.tune, color: theme.colorScheme.primary),
+                      onPressed: () => _showFilterDialog(context, controller),
+                      tooltip: 'Filter by rating',
+                    ),
+                  ],
+                ),
+                hintText: 'Search for movies and shows...',
+                hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 14),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: theme.dividerColor),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: theme.dividerColor),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: theme.colorScheme.primary, width: 1.5),
+                ),
+                contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
               ),
-              hintText: 'Search Movie',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
-              ),
-              contentPadding: EdgeInsets.symmetric(vertical: 14),
             ),
           ),
         ),
-        Obx(() => Expanded(
-              child: buildMoviesGrid(
-                title: '',
-                movies: controller.searchResults.map((movie) => movie.toJson()).toList(),
-                isLoading: controller.isLoading.value,
+        Obx(() {
+          if (controller.errorMessage.value.isNotEmpty) {
+            return Expanded(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.error_outline, size: 48, color: Colors.redAccent),
+                      const SizedBox(height: 12),
+                      Text(
+                        controller.errorMessage.value,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            )),
+            );
+          }
+
+          if (controller.searchText.value.isEmpty) {
+            return Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.search_rounded,
+                      size: 64,
+                      color: isDark ? Colors.grey.shade600 : Colors.grey.shade400,
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      'Type a title to search the database',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+
+          return Expanded(
+            child: buildMoviesGrid(
+              movies: controller.searchResults,
+              isLoading: controller.isLoading.value,
+              emptyMessage: 'No titles found matching "${controller.searchText.value}".',
+            ),
+          );
+        }),
       ],
-    ),
+    );
+
+    if (isEmbedded) {
+      return content;
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Search Movies'),
+      ),
+      body: content,
     );
   }
 
-  void showFilterDialog(BuildContext context) {
+  void _showFilterDialog(BuildContext context, SearchMovieController controller) {
+    final theme = Theme.of(context);
+
     Get.bottomSheet(
       Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-          boxShadow: [
-            BoxShadow(color: Colors.black12, blurRadius: 8, spreadRadius: 2),
-          ],
+          color: theme.cardColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Sort by Rating',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: theme.colorScheme.primary,
+              ),
             ),
-            SizedBox(height: 12),
-            ListTile(
-              title: Text('High to Low'),
-              leading: Obx(() => Radio<String>(
-                    value: 'high',
-                    groupValue: controller.sortByRating.value,
-                    onChanged: (value) {
-                      controller.sortByRating.value = value!;
+            const SizedBox(height: 16),
+            Obx(
+              () => RadioGroup<String>(
+                groupValue: controller.sortByRating.value,
+                onChanged: (val) {
+                  if (val != null) {
+                    controller.sortByRating.value = val;
+                    if (val == 'none') {
+                      controller.searchMovie(controller.searchText.value);
+                    } else {
                       controller.sortResults();
-                      Get.back();
-                    },
-                  )),
+                    }
+                    Get.back();
+                  }
+                },
+                child: Column(
+                  children: [
+                    RadioListTile<String>(
+                      title: const Text('Highest to Lowest Rating'),
+                      value: 'high',
+                      activeColor: theme.colorScheme.primary,
+                    ),
+                    RadioListTile<String>(
+                      title: const Text('Lowest to Highest Rating'),
+                      value: 'low',
+                      activeColor: theme.colorScheme.primary,
+                    ),
+                    RadioListTile<String>(
+                      title: const Text('Default Order'),
+                      value: 'none',
+                      activeColor: theme.colorScheme.primary,
+                    ),
+                  ],
+                ),
+              ),
             ),
-            ListTile(
-              title: Text('Low to High'),
-              leading: Obx(() => Radio<String>(
-                    value: 'low',
-                    groupValue: controller.sortByRating.value,
-                    onChanged: (value) {
-                      controller.sortByRating.value = value!;
-                      controller.sortResults();
-                      Get.back();
-                    },
-                  )),
-            ),
-            TextButton(
-              onPressed: () => Get.back(),
-              child: Text('Close'),
-            )
           ],
         ),
       ),
