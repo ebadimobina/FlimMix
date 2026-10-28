@@ -1,4 +1,4 @@
-# 🎬 FilmMix – The Ultimate Flutter Movie & TV Experience
+# 🎬 FilmMix – The Ultimate Flutter Movie
 
 <p align="center">
   <img src="assets/icon.png" alt="FilmMix Logo" width="100"/>
