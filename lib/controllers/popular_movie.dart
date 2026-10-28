@@ -1,15 +1,14 @@
 import 'package:get/get.dart';
-
 import '../core/service/movie_api.dart';
 import '../model/dto/genre_movie.dart';
-import '../model/dto/popular_movie.dart';
+import '../model/dto/movie.dart';
 
 class PopularMovieController extends GetxController {
-  final RxBool isLoading = RxBool(false);
-  final RxList<ResultPopular> popularMovie = RxList();
-  late final ResultPopular movie;
+  final RxBool isLoading = false.obs;
+  final RxString errorMessage = ''.obs;
+  final RxList<MovieModel> popularMovie = <MovieModel>[].obs;
   final MovieApi _movieApi = MovieApi();
-  final expandedGenreIndexes = <int>{}.obs;
+  final RxSet<int> expandedGenreIndexes = <int>{}.obs;
 
   void toggleGenres(int index) {
     if (expandedGenreIndexes.contains(index)) {
@@ -28,22 +27,18 @@ class PopularMovieController extends GetxController {
   Future<void> fetchPopularMovies() async {
     try {
       isLoading.value = true;
+      errorMessage.value = '';
       final response = await _movieApi.fetchPopularMovies();
       popularMovie.assignAll(response.results);
-      if (popularMovie.isNotEmpty) {
-        movie = popularMovie.first;
-      }
     } catch (e) {
-      Get.snackbar("Error", e.toString());
+      errorMessage.value = e.toString();
     } finally {
       isLoading.value = false;
     }
   }
 
   int get itemCount => isLoading.value ? 8 : popularMovie.length;
-
   bool get hasMovies => popularMovie.isNotEmpty;
-
   bool get isLoadingNow => isLoading.value;
 
   List<String> genresAt(int index) {
@@ -51,7 +46,7 @@ class PopularMovieController extends GetxController {
     return movie != null ? getGenreNames(movie.genreIds) : [];
   }
 
-  ResultPopular? movieAt(int index) {
+  MovieModel? movieAt(int index) {
     if (isLoading.value) return null;
     if (index < 0 || index >= popularMovie.length) return null;
     return popularMovie[index];
@@ -59,16 +54,14 @@ class PopularMovieController extends GetxController {
 
   String posterUrl(int index) {
     final movie = movieAt(index);
-    return movie?.posterPath != null
-        ? 'https://image.tmdb.org/t/p/w500${movie!.posterPath}'
-        : '';
+    return movie?.posterUrl ?? '';
   }
 
   String movieTitle(int index) => movieAt(index)?.title ?? '';
 
   String movieRating(int index) {
     final movie = movieAt(index);
-    return movie != null ? '${movie.voteAverage?.toStringAsFixed(1)}/10' : '';
+    return movie != null ? '${movie.ratingText}/10' : '';
   }
 
   @override

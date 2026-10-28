@@ -1,134 +1,61 @@
-import 'package:flimmix/view/pages/movie_details/movies_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../controllers/popular_movie.dart';
-import '../../../../core/widgets/shimmer.dart';
+import '../../../../core/widgets/movie_card.dart';
 
 class PopularMoviesList extends StatelessWidget {
-  final PopularMovieController controller = Get.find<PopularMovieController>();
-  PopularMoviesList({super.key});
+  const PopularMoviesList({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<PopularMovieController>();
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Popular Movies',
+        title: const Text('Popular Movies'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, size: 20),
+          onPressed: () => Get.back(),
         ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        foregroundColor: Color(0xFF110E47),
       ),
       body: Obx(() {
-        if (controller.isLoadingNow) {
-          return Padding(
-            padding: const EdgeInsets.all(16),
-            child: GridView.builder(
-              itemCount: controller.itemCount,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 16,
-                crossAxisSpacing: 16,
-                childAspectRatio: 0.55,
-              ),
-              itemBuilder: (_, __) {
-                return ShimmerLoadingBox(
-                  borderRadius: BorderRadius.circular(12),
-                  width: double.infinity,
-                  height: double.infinity,
-                );
-              },
-            ),
-          );
-        }
-
-        if (!controller.hasMovies) {
+        if (controller.errorMessage.value.isNotEmpty && controller.popularMovie.isEmpty) {
           return Center(
-            child: Text(
-              'No movies found.',
-              style: TextStyle(fontSize: 18, color: Colors.grey[600]),
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.error_outline, size: 48, color: Colors.redAccent),
+                  const SizedBox(height: 12),
+                  Text(
+                    controller.errorMessage.value,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton.icon(
+                    onPressed: controller.fetchPopularMovies,
+                    icon: const Icon(Icons.refresh),
+                    label: const Text('Try Again'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      foregroundColor: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         }
 
-        return Padding(
-          padding: const EdgeInsets.all(16),
-          child: GridView.builder(
-            itemCount: controller.itemCount,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 16,
-              crossAxisSpacing: 16,
-              childAspectRatio: 0.55,
-            ),
-            itemBuilder: (context, index) {
-              final poster = controller.posterUrl(index);
-              final title = controller.movieTitle(index);
-              final rating = controller.movieRating(index);
-              return InkWell(
-                borderRadius: BorderRadius.circular(6),
-                onTap: () {
-                  final selectedMovie = controller.movieAt(index);
-                  if (selectedMovie != null) {
-                    Get.to(() => MoviesDetailsPage(), arguments: selectedMovie);
-                  }
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(6),
-                      child: poster.isEmpty
-                          ? Container(
-                              color: Colors.grey[300],
-                              height: 270,
-                              alignment: Alignment.center,
-                              child: const Icon(Icons.broken_image,
-                                  size: 50, color: Colors.grey),
-                            )
-                          : CachedNetworkImage(
-                              imageUrl: poster,
-                              width: double.infinity,
-                              height: 270,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) =>
-                                  Container(color: Colors.grey[300]),
-                              errorWidget: (context, url, error) => Container(
-                                color: Colors.grey[300],
-                                height: 220,
-                                alignment: Alignment.center,
-                                child: const Icon(Icons.broken_image,
-                                    size: 50, color: Colors.grey),
-                              ),
-                            ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Row(
-                      children: [
-                        const Icon(Icons.star, color: Colors.amber, size: 16),
-                        const SizedBox(width: 4),
-                        Text(
-                          rating,
-                          style: const TextStyle(fontSize: 13),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            },
+        return RefreshIndicator(
+          color: Theme.of(context).colorScheme.primary,
+          onRefresh: controller.fetchPopularMovies,
+          child: buildMoviesGrid(
+            movies: controller.popularMovie,
+            isLoading: controller.isLoadingNow,
+            emptyMessage: 'No popular movies found.',
           ),
         );
       }),
