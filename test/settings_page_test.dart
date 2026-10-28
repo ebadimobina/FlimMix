@@ -25,6 +25,9 @@ void main() {
   });
 
   testWidgets('SettingsPage renders correctly', (tester) async {
+    tester.view.physicalSize = const Size(1080, 2400);
+    tester.view.devicePixelRatio = 2.0;
+
     await tester.pumpWidget(
       GetMaterialApp(
         theme: ThemeService.lightTheme,
@@ -35,7 +38,9 @@ void main() {
 
     expect(find.text('Settings'), findsOneWidget);
     expect(find.text('Cinematic Dark Mode'), findsOneWidget);
-    expect(find.text('LIBRARY & DATA'), findsOneWidget);
-    expect(find.text('TVMaze REST API'), findsOneWidget);
+    expect(find.textContaining('LIBRARY & DATA'), findsOneWidget);
+    expect(find.textContaining('Export Watchlist (JSON)'), findsOneWidget);
+    expect(find.textContaining('Import Watchlist (JSON)'), findsOneWidget);
+    expect(find.textContaining('TVMaze REST API'), findsOneWidget);
   });
 }

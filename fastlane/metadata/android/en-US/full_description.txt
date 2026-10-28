@@ -1,0 +1,11 @@
+FilmMix is an elegant, open-source movie and television discovery application designed for speed, privacy, and simplicity.
+
+Key Features:
+• High-Speed Discovery: Browse Top Rated and Popular titles powered by TVMaze REST API without tracker SDKs or API keys.
+• Interactive Genre Filtering: Filter titles instantly by Sci-Fi, Action, Drama, Comedy, Crime, and more.
+• 3-Tier Watchlist: Organize titles into Favorites, Watchlist, or Watched categories.
+• Backup & Restore: Export and import your watchlist data freely using standard JSON.
+• Dual Theme Engine: Switch between Cinematic Dark and Clean Light themes with persistent state.
+• Comprehensive Details: Cast and crew listings, character profiles, synopsis, and similar recommendations.
+• Smart Search: Fast debounce search with rating-based sorting.
+• Privacy-Focused: No ads, no analytics, no third-party telemetry, 100% open source.

@@ -28,6 +28,11 @@ class MoviesDetailsPage extends StatelessWidget {
         ),
         actions: [
           IconButton(
+            icon: const Icon(Icons.play_circle_outline),
+            onPressed: controller.watchTrailer,
+            tooltip: 'Watch Trailer',
+          ),
+          IconButton(
             icon: const Icon(Icons.share_outlined),
             onPressed: () => controller.shareMovie(context),
             tooltip: 'Share',

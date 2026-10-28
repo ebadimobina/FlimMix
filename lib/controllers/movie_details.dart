@@ -74,6 +74,16 @@ class MovieDetailsController extends GetxController {
     }
   }
 
+  Future<void> watchTrailer() async {
+    final query = Uri.encodeComponent('$title official trailer');
+    final url = Uri.parse('https://www.youtube.com/results?search_query=$query');
+    try {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      Get.snackbar('Error', 'Could not open trailer: $e');
+    }
+  }
+
   Future<void> loadCredits(int movieId) async {
     isLoadingCast.value = true;
     try {

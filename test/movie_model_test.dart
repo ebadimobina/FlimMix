@@ -1,8 +1,21 @@
 import 'package:flimmix/model/dto/cast_movie.dart';
 import 'package:flimmix/model/dto/movie.dart';
+import 'package:flimmix/model/storage/local_storage_manager.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_storage/get_storage.dart';
 
 void main() {
+  setUp(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    const MethodChannel channel = MethodChannel('plugins.flutter.io/path_provider');
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+      return '.';
+    });
+    await GetStorage.init();
+  });
+
   group('MovieModel TMDb & TVMaze Tests', () {
     test('fromJson parses standard TMDb payload correctly', () {
       final json = {
@@ -105,6 +118,34 @@ void main() {
       expect(credits.cast.first.name, 'Bryan Cranston');
       expect(credits.cast.first.character, 'Walter White');
       expect(credits.cast.first.profileImageUrl, 'https://static.tvmaze.com/uploads/images/medium_portrait/0/1815.jpg');
+    });
+  });
+
+  group('LocalStorageManager Export & Import Tests', () {
+    test('Export and import bookmarks preserves integrity', () {
+      LocalStorageManager.clearAll();
+
+      final movie = MovieModel(
+        id: 999,
+        title: 'Interstellar',
+        originalTitle: 'Interstellar',
+        voteAverage: 8.6,
+        watchlistStatus: 'favorite',
+      );
+
+      LocalStorageManager.setMovieStatus(movie, 'favorite');
+      expect(LocalStorageManager.isBookmarked(999), isTrue);
+
+      final exportedJson = LocalStorageManager.exportBookmarksJson();
+      expect(exportedJson, contains('Interstellar'));
+      expect(exportedJson, contains('999'));
+
+      LocalStorageManager.clearAll();
+      expect(LocalStorageManager.isBookmarked(999), isFalse);
+
+      final importedCount = LocalStorageManager.importBookmarksJson(exportedJson);
+      expect(importedCount, 1);
+      expect(LocalStorageManager.isBookmarked(999), isTrue);
     });
   });
 }
