@@ -21,7 +21,7 @@
 ## 📱 App Preview
 
 <p align="center">
-  <img src="assets/screenshots/filmmix_mockup.png" alt="FilmMix App Showcase Mockup" width="850"/>
+  <img src="assets/screenshots/filmmix_mockup.png" alt="FilmMix App Showcase Mockup" width="640"/>
 </p>
 
 ---
