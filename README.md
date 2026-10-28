@@ -1,4 +1,4 @@
-# 🎬 FilmMix – The Ultimate Flutter Movie & TV Experience
+# FilmMix – The Ultimate Flutter Movie & TV Experience
 
 <p align="center">
   <img src="assets/icon.png" alt="FilmMix Logo" width="100"/>
@@ -18,7 +18,7 @@
 
 ---
 
-## 📱 App Preview
+## App Preview
 
 <p align="center">
   <img src="assets/screenshots/filmmix_mockup.png" alt="FilmMix App Showcase Mockup" width="640"/>
@@ -26,35 +26,35 @@
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-- **🚀 High-Speed Discovery:** Powered by the TVMaze REST API for fast, unrestricted, and uncensored global access without requiring an API key.
-- **🏷️ Interactive Genre Filtering:** Instantly filter Top Rated and Popular titles with responsive category pills (Sci-Fi, Action, Drama, Comedy, Crime, and more).
-- **🌓 Dual Theme Engine:**
+- ** High-Speed Discovery:** Powered by the TVMaze REST API for fast, unrestricted, and uncensored global access without requiring an API key.
+- ** Interactive Genre Filtering:** Instantly filter Top Rated and Popular titles with responsive category pills (Sci-Fi, Action, Drama, Comedy, Crime, and more).
+- ** Dual Theme Engine:**
   - **Cinematic Dark Mode:** Deep obsidian (`#0C1017`) designed for cinema lovers in low-light environments.
   - **Clean Light Mode:** Crisp, high-contrast modern palette for daytime readability.
   - State persisted locally using **GetStorage**.
-- **📑 3-Tier Watchlist & Library:**
+- ** 3-Tier Watchlist & Library:**
   - Mark titles as **Favorite** ❤️, save them to your **Watchlist** 📑, or mark them as **Watched** ✅.
   - Swipe-to-dismiss deletion with instant undo notifications.
   - Quick-filter chips to view specific library categories.
-- **🎭 Rich Title Details:**
+- ** Rich Title Details:**
   - High-resolution poster and backdrop art with smooth gradient overlays.
   - Comprehensive **Cast & Crew** horizontal carousel with character details.
   - **"More Like This"** intelligent recommendations based on genre matching.
   - One-tap direct web search and social sharing.
-- **🔍 Smart Search & Filter:**
+- ** Smart Search & Filter:**
   - Real-time search with debouncing to minimize network overhead.
   - Filter and sort search results by rating (Highest to Lowest, Lowest to Highest, or Default).
-- **⚙️ Settings & Storage Manager:**
+- ** Settings & Storage Manager:**
   - Toggle themes on the fly.
   - Library analytics counter with one-tap option to clear saved bookmarks.
   - Developer attribution and social links.
-- **✨ Shimmer Skeleton Loading:** Adaptive, theme-aware shimmer animations that prevent bright flashes in dark mode.
+- ** Shimmer Skeleton Loading:** Adaptive, theme-aware shimmer animations that prevent bright flashes in dark mode.
 
 ---
 
-## 🛠️ Architecture & Tech Stack
+##  Architecture & Tech Stack
 
 ```
 lib/
@@ -83,7 +83,7 @@ lib/
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - [Flutter SDK](https://flutter.dev/docs/get-started/install) (version 3.24 or newer recommended)
@@ -115,7 +115,7 @@ lib/
 
 ---
 
-## 👩‍💻 Author
+##  Author
 
 **Mobina Ebadi**
 - GitHub: [@ebadimobina](https://github.com/ebadimobina)
