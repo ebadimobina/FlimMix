@@ -9,10 +9,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ebadimobina/filmmix/releases/latest">
+  <a href="https://github.com/ebadimobina/FlimMix/releases/latest">
     <img src="https://img.shields.io/badge/Download-Latest%20APK-2ea44f?style=for-the-badge&logo=android&logoColor=white" alt="Download Latest APK"/>
   </a>
-  <a href="https://github.com/ebadimobina/filmmix/releases">
+  <a href="https://github.com/ebadimobina/FlimMix/releases">
     <img src="https://img.shields.io/badge/Version-v1.0.0-02569B?style=for-the-badge" alt="Version 1.0.0"/>
   </a>
   <a href="LICENSE">
@@ -36,8 +36,8 @@ You can easily install FilmMix on any Android device:
 
 | Source | Link |
 |---|---|
-| **Direct APK (Recommended)** | [Download FilmMix-v1.0.0.apk](https://github.com/ebadimobina/filmmix/releases/download/v1.0.0/FilmMix-v1.0.0.apk) |
-| **All Releases** | [GitHub Releases Page](https://github.com/ebadimobina/filmmix/releases) |
+| **Direct APK (Recommended)** | [Download FilmMix-v1.0.0.apk](https://github.com/ebadimobina/FlimMix/releases/download/v1.0.0/FilmMix-v1.0.0.apk) |
+| **All Releases** | [GitHub Releases Page](https://github.com/ebadimobina/FlimMix/releases) |
 | **Automatic Updates** | Compatible with **[Obtainium](https://github.com/ImranR98/Obtainium)** and **IzzyOnDroid** / **F-Droid** |
 
 ---
@@ -77,8 +77,8 @@ You can easily install FilmMix on any Android device:
 For developers who want to run the project locally:
 
 ```bash
-git clone https://github.com/ebadimobina/filmmix.git
-cd filmmix
+git clone https://github.com/ebadimobina/FlimMix.git
+cd FlimMix
 flutter pub get
 flutter run
 ```
